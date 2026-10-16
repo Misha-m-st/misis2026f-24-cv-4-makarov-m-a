@@ -1,0 +1,407 @@
+{
+  "model": "SAM 3 image",
+  "revision": "0570b3a5be9c4e694f23d85232fb55f4a6f1f7fc",
+  "checkpoint": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/weights/sam3/sam3.pt",
+  "weights_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+  "scope": "first frame of each of nine local phone videos; not a full preparation or quality benchmark",
+  "manual_mask_verification": false,
+  "device": "cuda",
+  "prompt": "sheet of paper",
+  "checkpoint_loading": "strict active detector; omit unused backbone.vision_backbone.sam2_convs subtree",
+  "results": [
+    {
+      "video": "9a9c14a14182e244",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/9a9c14a14182e244/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 370748,
+      "confidence": {
+        "instance_score": 0.921875,
+        "instances": 2,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.6750624069973128,
+      "geometry_status": "PASS",
+      "geometry": {
+        "method": "supported-boundary-lines/v2",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            397.6481392320726,
+            602.1496872626456
+          ],
+          [
+            893.9386880246811,
+            685.4108483988674
+          ],
+          [
+            709.3183203568947,
+            1326.396145728827
+          ],
+          [
+            73.60013294453996,
+            1158.4019474534778
+          ]
+        ],
+        "side_support": [
+          0.945273631840796,
+          0.9962406015037594,
+          0.9961977186311787,
+          0.7782101167315175
+        ],
+        "visible_containment": 0.9979878515865224,
+        "area_ratio": 1.0021820751561707,
+        "geometry_score": 0.9287623096611958,
+        "visible_pixels": 370748,
+        "extrapolated_pixels": 1555,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "video": "5682555958f22e6e",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/5682555958f22e6e/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 491961,
+      "confidence": {
+        "instance_score": 0.96875,
+        "instances": 2,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.35701858799438924,
+      "geometry_status": "PASS",
+      "geometry": {
+        "method": "supported-boundary-lines/v2",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            730.2082377116377,
+            547.6656290642251
+          ],
+          [
+            1046.0412590652975,
+            1208.44564646049
+          ],
+          [
+            289.355571512324,
+            1366.3273533699798
+          ],
+          [
+            163.38796957666915,
+            616.4851749912131
+          ]
+        ],
+        "side_support": [
+          0.7568493150684932,
+          0.9935275080906149,
+          0.993421052631579,
+          0.9824561403508771
+        ],
+        "visible_containment": 0.9987031492333742,
+        "area_ratio": 1.0022156227831067,
+        "geometry_score": 0.9313419417570803,
+        "visible_pixels": 491961,
+        "extrapolated_pixels": 1728,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "video": "c427d81da4bf1aac",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/c427d81da4bf1aac/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 462753,
+      "confidence": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.3554632320010569,
+      "geometry_status": "PASS",
+      "geometry": {
+        "method": "supported-boundary-lines/v2",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            578.4582149260685,
+            420.37666362083377
+          ],
+          [
+            972.227452539422,
+            1008.8112011744082
+          ],
+          [
+            290.541409635582,
+            1261.518738895804
+          ],
+          [
+            23.13414125525508,
+            558.6169041996384
+          ]
+        ],
+        "side_support": [
+          0.558303886925795,
+          0.996551724137931,
+          0.9966666666666667,
+          0.9692982456140351
+        ],
+        "visible_containment": 0.9992090813025524,
+        "area_ratio": 1.005653123804708,
+        "geometry_score": 0.8796398184556362,
+        "visible_pixels": 462753,
+        "extrapolated_pixels": 2982,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "video": "d5cfd9c646ce1244",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/d5cfd9c646ce1244/000000.png",
+      "index": 0,
+      "sam_status": "FAILED",
+      "sam_reason": "ValueError: ambiguous document instances"
+    },
+    {
+      "video": "18b481ce825fd626",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/18b481ce825fd626/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 510211,
+      "confidence": {
+        "instance_score": 0.87109375,
+        "instances": 2,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.36213670700090006,
+      "geometry_status": "PASS",
+      "geometry": {
+        "method": "supported-boundary-lines/v2",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            791.0328325653046,
+            405.910364048774
+          ],
+          [
+            1003.4021138624142,
+            1124.6412336351095
+          ],
+          [
+            210.660578282836,
+            1211.687289888652
+          ],
+          [
+            189.89553768762696,
+            447.8269238056896
+          ]
+        ],
+        "side_support": [
+          0.745819397993311,
+          0.9905956112852664,
+          0.7704918032786885,
+          0.970954356846473
+        ],
+        "visible_containment": 0.9987554168765471,
+        "area_ratio": 1.0297896360525352,
+        "geometry_score": 0.8664863287456812,
+        "visible_pixels": 510211,
+        "extrapolated_pixels": 15834,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "video": "886921738c0c0208",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/886921738c0c0208/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 491574,
+      "confidence": {
+        "instance_score": 0.96875,
+        "instances": 2,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.3592858990014065,
+      "geometry_status": "REJECTED",
+      "geometry_reason": "page touches frame border: full contour is underdetermined"
+    },
+    {
+      "video": "ddc075f0c09da8d4",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/ddc075f0c09da8d4/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 741901,
+      "confidence": {
+        "instance_score": 0.98828125,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.3588071350095561,
+      "geometry_status": "REJECTED",
+      "geometry_reason": "page touches frame border: full contour is underdetermined"
+    },
+    {
+      "video": "5146fee11243500c",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/5146fee11243500c/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 536547,
+      "confidence": {
+        "instance_score": 0.984375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.35621845099376515,
+      "geometry_status": "PASS",
+      "geometry": {
+        "method": "supported-boundary-lines/v2",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            288.09476693878315,
+            496.06628550198474
+          ],
+          [
+            876.2256652156284,
+            566.0488848311871
+          ],
+          [
+            903.0955051741543,
+            1344.6952244099405
+          ],
+          [
+            119.37621349210002,
+            1266.832022013176
+          ]
+        ],
+        "side_support": [
+          0.9703389830508474,
+          0.7620578778135049,
+          0.9968253968253968,
+          0.8603174603174604
+        ],
+        "visible_containment": 0.9991463935125907,
+        "area_ratio": 1.0034013795622752,
+        "geometry_score": 0.8970447915455748,
+        "visible_pixels": 536547,
+        "extrapolated_pixels": 2283,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "video": "04a0425acb1f4fbe",
+      "frame": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v1/frames/04a0425acb1f4fbe/000000.png",
+      "index": 0,
+      "sam_status": "PASS",
+      "shape": [
+        1920,
+        1080
+      ],
+      "visible_pixels": 597641,
+      "confidence": {
+        "instance_score": 0.98828125,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1
+      },
+      "elapsed_s": 0.36213589199178386,
+      "geometry_status": "REJECTED",
+      "geometry_reason": "boundary has no bounded four-side hypothesis"
+    }
+  ],
+  "geometry_method": "supported-boundary-lines/v2",
+  "summary": {
+    "videos_checked": 9,
+    "selected_visible_masks": 8,
+    "initial_geometry_passed": 5,
+    "full_sequence_preparation": "NOT_RUN"
+  }
+}

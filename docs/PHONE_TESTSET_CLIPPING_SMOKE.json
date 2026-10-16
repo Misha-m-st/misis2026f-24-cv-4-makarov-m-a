@@ -1,0 +1,2574 @@
+{
+  "source_video": {
+    "path": "/home/mikhail/Видео/cutie_test/video_20261011_005046.mp4",
+    "sha256": "79b68cf02c43847c8a8a6eb831b188e2f773e1ad0bedb5fa08516f2746430aae"
+  },
+  "weights_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+  "geometry_method": "supported-boundary-lines/v4-clipped",
+  "scope": "reprocessing all 33 cached raw SAM sample outputs from one complete phone video; no new SAM forward",
+  "manual_mask_verification": false,
+  "passed": 29,
+  "unresolved": 4,
+  "out_of_frame_passed": [
+    90,
+    100,
+    110,
+    120,
+    130,
+    140,
+    150,
+    310,
+    320
+  ],
+  "results": [
+    {
+      "index": 0,
+      "time_s": 0.0,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.921875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "visible page area is too small"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            397.6481392320726,
+            602.1496872626456
+          ],
+          [
+            893.9386880246811,
+            685.4108483988674
+          ],
+          [
+            709.3183203568947,
+            1326.396145728827
+          ],
+          [
+            73.60013294453996,
+            1158.4019474534778
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            397.6481392320726,
+            602.1496872626456
+          ],
+          [
+            893.9386880246811,
+            685.4108483988674
+          ],
+          [
+            709.3183203568947,
+            1326.396145728827
+          ],
+          [
+            73.60013294453996,
+            1158.4019474534778
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.945273631840796,
+          0.9962406015037594,
+          0.9961977186311787,
+          0.7782101167315175
+        ],
+        "visible_containment": 0.9979878515865224,
+        "area_ratio": 1.0021820751561707,
+        "geometry_score": 0.9287623096611958,
+        "visible_pixels": 370748,
+        "extrapolated_pixels": 1555,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 10,
+      "time_s": 0.3332888888888889,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.9140625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 4,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "visible page area is too small"
+          },
+          {
+            "instance": 3,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": [
+          2
+        ]
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            380.1727299365927,
+            604.5711176334697
+          ],
+          [
+            867.8669164773008,
+            693.201991676454
+          ],
+          [
+            667.7246257893457,
+            1324.8751753684783
+          ],
+          [
+            45.34181950732498,
+            1150.8252557407268
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            380.1727299365927,
+            604.5711176334697
+          ],
+          [
+            867.8669164773008,
+            693.201991676454
+          ],
+          [
+            667.7246257893457,
+            1324.8751753684783
+          ],
+          [
+            45.34181950732498,
+            1150.8252557407268
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.9797979797979798,
+          1.0,
+          1.0,
+          0.7578125
+        ],
+        "visible_containment": 0.998522711583598,
+        "area_ratio": 1.0033908601408257,
+        "geometry_score": 0.9340635339354123,
+        "visible_pixels": 362150,
+        "extrapolated_pixels": 1763,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 20,
+      "time_s": 0.6663222222222223,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.921875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "visible page area is too small"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            358.1807767193688,
+            592.1829479743196
+          ],
+          [
+            858.9336742992034,
+            685.3507711254606
+          ],
+          [
+            650.1333133949806,
+            1338.3514542537466
+          ],
+          [
+            7.003475900853383,
+            1154.9322936757458
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            358.1807767193688,
+            592.1829479743196
+          ],
+          [
+            858.9336742992034,
+            685.3507711254606
+          ],
+          [
+            650.1333133949806,
+            1338.3514542537466
+          ],
+          [
+            7.003475900853383,
+            1154.9322936757458
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.9753694581280788,
+          0.9963503649635036,
+          0.9925093632958801,
+          0.7056603773584905
+        ],
+        "visible_containment": 0.9986325175920914,
+        "area_ratio": 1.0038486342010458,
+        "geometry_score": 0.9170875275163837,
+        "visible_pixels": 386111,
+        "extrapolated_pixels": 2014,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 30,
+      "time_s": 0.9993777777777778,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.8984375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 4,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "visible page area is too small"
+          },
+          {
+            "instance": 3,
+            "reason": "no quadrilateral passes side-support, containment and expansion gates"
+          }
+        ],
+        "nested_instances": [
+          2
+        ]
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            382.05202185769406,
+            578.7101338412758
+          ],
+          [
+            906.3892227882106,
+            662.7322457333953
+          ],
+          [
+            743.7118972904967,
+            1341.7138382026028
+          ],
+          [
+            50.28681626476863,
+            1166.7388864157901
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            382.05202185769406,
+            578.7101338412758
+          ],
+          [
+            906.3892227882106,
+            662.7322457333953
+          ],
+          [
+            743.7118972904967,
+            1341.7138382026028
+          ],
+          [
+            50.28681626476863,
+            1166.7388864157901
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.9716981132075472,
+          0.992831541218638,
+          0.9895104895104895,
+          0.6333333333333333
+        ],
+        "visible_containment": 0.9989908844023327,
+        "area_ratio": 1.004396004765135,
+        "geometry_score": 0.8964037688409885,
+        "visible_pixels": 417197,
+        "extrapolated_pixels": 2255,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 40,
+      "time_s": 1.3326444444444445,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.91015625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 4,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "visible page area is too small"
+          },
+          {
+            "instance": 3,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": [
+          2
+        ]
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            331.7497933657631,
+            573.0934404779196
+          ],
+          [
+            863.1704163493392,
+            640.4886739264867
+          ],
+          [
+            757.9438042347311,
+            1314.7997404440305
+          ],
+          [
+            39.01034392331797,
+            1175.7898802252778
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            331.7497933657631,
+            573.0934404779196
+          ],
+          [
+            863.1704163493392,
+            640.4886739264867
+          ],
+          [
+            757.9438042347311,
+            1314.7997404440305
+          ],
+          [
+            39.01034392331797,
+            1175.7898802252778
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.9813084112149533,
+          0.9963235294117647,
+          0.9863013698630136,
+          0.753731343283582
+        ],
+        "visible_containment": 0.9991032096032895,
+        "area_ratio": 1.0044457906900754,
+        "geometry_score": 0.9289715843743209,
+        "visible_pixels": 419273,
+        "extrapolated_pixels": 2240,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 50,
+      "time_s": 1.665688888888889,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.89453125,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 4,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          },
+          {
+            "instance": 3,
+            "reason": "no quadrilateral passes side-support, containment and expansion gates"
+          }
+        ],
+        "nested_instances": [
+          2
+        ]
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            270.8449206834559,
+            564.5697293822352
+          ],
+          [
+            817.527381163076,
+            613.8768961989005
+          ],
+          [
+            786.0597242648147,
+            1293.49542364092
+          ],
+          [
+            22.1417049284326,
+            1197.7387556010178
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            270.8449206834559,
+            564.5697293822352
+          ],
+          [
+            817.527381163076,
+            613.8768961989005
+          ],
+          [
+            786.0597242648147,
+            1293.49542364092
+          ],
+          [
+            22.1417049284326,
+            1197.7387556010178
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.9863013698630136,
+          0.9963235294117647,
+          0.990228013029316,
+          0.8272058823529411
+        ],
+        "visible_containment": 0.9986359138242531,
+        "area_ratio": 1.0019247006273435,
+        "geometry_score": 0.9498222286015244,
+        "visible_pixels": 440588,
+        "extrapolated_pixels": 1449,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 60,
+      "time_s": 1.9988777777777778,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.93359375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            242.313561618753,
+            563.1887322508306
+          ],
+          [
+            808.407334587782,
+            591.2938971140359
+          ],
+          [
+            878.5202705178081,
+            1278.2581707021945
+          ],
+          [
+            68.00479461321501,
+            1235.377032848511
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            242.313561618753,
+            563.1887322508306
+          ],
+          [
+            808.407334587782,
+            591.2938971140359
+          ],
+          [
+            878.5202705178081,
+            1278.2581707021945
+          ],
+          [
+            68.00479461321501,
+            1235.377032848511
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.9823008849557522,
+          0.8623188405797102,
+          0.9506172839506173,
+          0.8989169675090253
+        ],
+        "visible_containment": 0.9989075878987145,
+        "area_ratio": 1.0030515137254234,
+        "geometry_score": 0.9232333428762338,
+        "visible_pixels": 469603,
+        "extrapolated_pixels": 1946,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 2,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 70,
+      "time_s": 2.332011111111111,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.9453125,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            221.38650040704238,
+            546.9101743066368
+          ],
+          [
+            794.8798019407282,
+            552.1728883511197
+          ],
+          [
+            970.494424720314,
+            1215.216077617824
+          ],
+          [
+            148.79568633395655,
+            1236.413115996451
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            221.38650040704238,
+            546.9101743066368
+          ],
+          [
+            794.8798019407282,
+            552.1728883511197
+          ],
+          [
+            970.494424720314,
+            1215.216077617824
+          ],
+          [
+            148.79568633395655,
+            1236.413115996451
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.982532751091703,
+          0.7956204379562044,
+          0.9878048780487805,
+          0.9602888086642599
+        ],
+        "visible_containment": 0.9985854560316112,
+        "area_ratio": 1.0022446356384611,
+        "geometry_score": 0.9313372553763908,
+        "visible_pixels": 472237,
+        "extrapolated_pixels": 1728,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 2,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 80,
+      "time_s": 2.665111111111111,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.96484375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            756.5887057458709,
+            522.1013612517588
+          ],
+          [
+            1034.8599906798677,
+            1169.6159957669856
+          ],
+          [
+            215.86216960741595,
+            1260.9294342866312
+          ],
+          [
+            174.00755851950458,
+            544.1641615346998
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            756.5887057458709,
+            522.1013612517588
+          ],
+          [
+            1034.8599906798677,
+            1169.6159957669856
+          ],
+          [
+            215.86216960741595,
+            1260.9294342866312
+          ],
+          [
+            174.00755851950458,
+            544.1641615346998
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7580071174377224,
+          0.993920972644377,
+          0.9895470383275261,
+          0.9613733905579399
+        ],
+        "visible_containment": 0.9991191616225494,
+        "area_ratio": 1.0037368900861539,
+        "geometry_score": 0.925338440733276,
+        "visible_pixels": 487036,
+        "extrapolated_pixels": 2249,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 2,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 90,
+      "time_s": 2.9983555555555554,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            699.8996948325292,
+            471.0525354547389
+          ],
+          [
+            1089.9582663122887,
+            1121.910517491534
+          ],
+          [
+            260.0370490624245,
+            1302.4789231469194
+          ],
+          [
+            92.89864459092908,
+            532.3068234961207
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            699.8996948325292,
+            471.0525354547389
+          ],
+          [
+            1079.0,
+            1103.6253787453695
+          ],
+          [
+            1079.0,
+            1124.2947397955666
+          ],
+          [
+            260.0370490624245,
+            1302.4789231469194
+          ],
+          [
+            92.89864459092908,
+            532.3068234961207
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.717687074829932,
+          0.9970149253731343,
+          0.9936507936507937,
+          0.9713114754098361
+        ],
+        "visible_containment": 0.9986732641566026,
+        "area_ratio": 1.003128225983045,
+        "geometry_score": 0.9196032447176196,
+        "visible_pixels": 543439,
+        "extrapolated_pixels": 2421,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 4,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 100,
+      "time_s": 3.331777777777778,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.984375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            637.3963857877948,
+            480.1883328073068
+          ],
+          [
+            1124.5378476855533,
+            1155.3773769630866
+          ],
+          [
+            290.42888700762165,
+            1441.1056574101572
+          ],
+          [
+            1.6311816585034056,
+            585.6673914518855
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            637.3963857877948,
+            480.1883328073068
+          ],
+          [
+            1079.0,
+            1092.2608938537646
+          ],
+          [
+            1079.0,
+            1170.9765990405938
+          ],
+          [
+            290.42888700762165,
+            1441.1056574101572
+          ],
+          [
+            1.6311816585034056,
+            585.6673914518855
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.6843853820598007,
+          1.0,
+          0.9916897506925207,
+          0.9571984435797666
+        ],
+        "visible_containment": 0.9987764352116154,
+        "area_ratio": 1.0032665090815873,
+        "geometry_score": 0.9079917431748633,
+        "visible_pixels": 635847,
+        "extrapolated_pixels": 2855,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 110,
+      "time_s": 3.664633333333333,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 3,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          },
+          {
+            "instance": 2,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            601.0244954795071,
+            517.1907725479282
+          ],
+          [
+            1140.5711435559438,
+            1183.6928412746215
+          ],
+          [
+            360.3856110170268,
+            1537.0649210639594
+          ],
+          [
+            -25.86803188108859,
+            660.6125270897055
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            601.0244954795071,
+            517.1907725479282
+          ],
+          [
+            1079.0,
+            1107.6339968721795
+          ],
+          [
+            1079.0,
+            1211.5804681863476
+          ],
+          [
+            360.3856110170268,
+            1537.0649210639594
+          ],
+          [
+            0.0,
+            719.3099630529509
+          ],
+          [
+            0.0,
+            654.6943858501717
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.6600660066006601,
+          0.9968253968253968,
+          0.9943977591036415,
+          0.959349593495935
+        ],
+        "visible_containment": 0.998924225311967,
+        "area_ratio": 1.0041084785450378,
+        "geometry_score": 0.9022488411519046,
+        "visible_pixels": 652553,
+        "extrapolated_pixels": 3383,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 2,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 120,
+      "time_s": 3.997777777777778,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.9765625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            610.5614028567607,
+            532.3737398143078
+          ],
+          [
+            1184.9432814314284,
+            1173.2629538456188
+          ],
+          [
+            466.3552827630863,
+            1555.4802190265107
+          ],
+          [
+            5.488985410614121,
+            700.2137818458544
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            610.5614028567607,
+            532.3737398143078
+          ],
+          [
+            1079.0,
+            1055.0525629868835
+          ],
+          [
+            1079.0,
+            1229.6142307498403
+          ],
+          [
+            466.3552827630863,
+            1555.4802190265107
+          ],
+          [
+            5.488985410614121,
+            700.2137818458544
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.6535714285714286,
+          0.9891696750902527,
+          0.9922680412371134,
+          0.9681274900398407
+        ],
+        "visible_containment": 0.999447799496955,
+        "area_ratio": 1.0056321259400176,
+        "geometry_score": 0.9002209461406571,
+        "visible_pixels": 626584,
+        "extrapolated_pixels": 3875,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 4,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 130,
+      "time_s": 4.330988888888889,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.97265625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            594.7414528131143,
+            530.2451448901144
+          ],
+          [
+            1155.2587402210554,
+            1120.551626639846
+          ],
+          [
+            496.35367476218363,
+            1484.272146618773
+          ],
+          [
+            23.08103556440511,
+            702.5919126855517
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            594.7414528131143,
+            530.2451448901144
+          ],
+          [
+            1079.0,
+            1040.2400472223221
+          ],
+          [
+            1079.0,
+            1162.6470211058513
+          ],
+          [
+            496.35367476218363,
+            1484.272146618773
+          ],
+          [
+            23.08103556440511,
+            702.5919126855517
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.6583629893238434,
+          0.9962406015037594,
+          0.9945205479452055,
+          0.9705882352941176
+        ],
+        "visible_containment": 0.9990629685157422,
+        "area_ratio": 1.0046653356014301,
+        "geometry_score": 0.9044615599565884,
+        "visible_pixels": 554944,
+        "extrapolated_pixels": 3109,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 140,
+      "time_s": 4.664066666666667,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.96484375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            591.8417340415198,
+            543.1031578970392
+          ],
+          [
+            1132.9838435401962,
+            1088.3273370656032
+          ],
+          [
+            529.4715830696313,
+            1431.1329310048109
+          ],
+          [
+            58.05832304837243,
+            716.1495130989695
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            591.8417340415198,
+            543.1031578970392
+          ],
+          [
+            1079.0,
+            1033.9362699763406
+          ],
+          [
+            1079.0,
+            1118.9911110434325
+          ],
+          [
+            529.4715830696313,
+            1431.1329310048109
+          ],
+          [
+            58.05832304837243,
+            716.1495130989695
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.6739130434782609,
+          1.0,
+          0.9707602339181286,
+          0.96875
+        ],
+        "visible_containment": 0.9989803989420867,
+        "area_ratio": 1.0049847162831318,
+        "geometry_score": 0.9028573477207842,
+        "visible_pixels": 485484,
+        "extrapolated_pixels": 2915,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 150,
+      "time_s": 4.997166666666667,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.96875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            578.9142726346516,
+            559.3434044696182
+          ],
+          [
+            1097.770539895721,
+            1069.559116220575
+          ],
+          [
+            528.3402471135481,
+            1396.4289508431832
+          ],
+          [
+            68.08392208804726,
+            729.3975108285489
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            578.9142726346516,
+            559.3434044696182
+          ],
+          [
+            1079.0,
+            1051.1011636484686
+          ],
+          [
+            1079.0,
+            1080.333961446167
+          ],
+          [
+            528.3402471135481,
+            1396.4289508431832
+          ],
+          [
+            68.08392208804726,
+            729.3975108285489
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.6892857142857143,
+          0.9960474308300395,
+          0.9938271604938271,
+          0.9720930232558139
+        ],
+        "visible_containment": 0.9984150007069781,
+        "area_ratio": 1.004442559169506,
+        "geometry_score": 0.912369076299398,
+        "visible_pixels": 438486,
+        "extrapolated_pixels": 2643,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 160,
+      "time_s": 5.330322222222223,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.96875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            568.9051503000549,
+            592.7411247890002
+          ],
+          [
+            1075.0027155303756,
+            1080.064295961669
+          ],
+          [
+            531.3021759357981,
+            1400.3627520101486
+          ],
+          [
+            80.84348062987708,
+            765.3550841963282
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            568.9051503000549,
+            592.7411247890002
+          ],
+          [
+            1075.0027155303756,
+            1080.064295961669
+          ],
+          [
+            531.3021759357981,
+            1400.3627520101486
+          ],
+          [
+            80.84348062987708,
+            765.3550841963282
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.708185053380783,
+          0.9880952380952381,
+          0.9871382636655949,
+          0.9758454106280193
+        ],
+        "visible_containment": 0.9982541169643274,
+        "area_ratio": 1.0036368464926193,
+        "geometry_score": 0.9144523067931468,
+        "visible_pixels": 406671,
+        "extrapolated_pixels": 2189,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 170,
+      "time_s": 5.663688888888889,
+      "status": "UNRESOLVED",
+      "reason": "no SAM instance passes full-page geometry; instance 0: ambiguous outer contour: multiple similarly supported quadrilaterals"
+    },
+    {
+      "index": 180,
+      "time_s": 5.996644444444445,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.97265625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            554.3046084052414,
+            673.6155174172411
+          ],
+          [
+            1057.342778125427,
+            1159.2687236937975
+          ],
+          [
+            537.5440770585825,
+            1497.3052609641563
+          ],
+          [
+            82.67558232798793,
+            863.7947694984142
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            554.3046084052414,
+            673.6155174172411
+          ],
+          [
+            1057.342778125427,
+            1159.2687236937975
+          ],
+          [
+            537.5440770585825,
+            1497.3052609641563
+          ],
+          [
+            82.67558232798793,
+            863.7947694984142
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7168458781362007,
+          0.9959677419354839,
+          0.9967845659163987,
+          0.9704433497536946
+        ],
+        "visible_containment": 0.9979651242142774,
+        "area_ratio": 1.0031069079069814,
+        "geometry_score": 0.9196996931447464,
+        "visible_pixels": 402973,
+        "extrapolated_pixels": 2072,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 190,
+      "time_s": 6.329866666666667,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.97265625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 3,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          },
+          {
+            "instance": 2,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            564.5053166878293,
+            692.6980467694568
+          ],
+          [
+            1076.378182469832,
+            1185.2486297494486
+          ],
+          [
+            561.8498248037823,
+            1537.3983428951624
+          ],
+          [
+            90.81451221997516,
+            887.0759880279388
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            564.5053166878293,
+            692.6980467694568
+          ],
+          [
+            1076.378182469832,
+            1185.2486297494486
+          ],
+          [
+            561.8498248037823,
+            1537.3983428951624
+          ],
+          [
+            90.81451221997516,
+            887.0759880279388
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7253521126760564,
+          0.9959839357429718,
+          0.9968847352024922,
+          0.946078431372549
+        ],
+        "visible_containment": 0.9979204131285642,
+        "area_ratio": 1.0029931626068642,
+        "geometry_score": 0.9157754874878309,
+        "visible_pixels": 415948,
+        "extrapolated_pixels": 2110,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 200,
+      "time_s": 6.662866666666667,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.9765625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 3,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          },
+          {
+            "instance": 2,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            539.1334714181505,
+            700.4080616519
+          ],
+          [
+            1046.3193580005607,
+            1198.738609295769
+          ],
+          [
+            533.2797592557305,
+            1554.242273817652
+          ],
+          [
+            68.88405885575685,
+            903.8691226993211
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            539.1334714181505,
+            700.4080616519
+          ],
+          [
+            1046.3193580005607,
+            1198.738609295769
+          ],
+          [
+            533.2797592557305,
+            1554.242273817652
+          ],
+          [
+            68.88405885575685,
+            903.8691226993211
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7429577464788732,
+          1.0,
+          0.9968652037617555,
+          0.9754901960784313
+        ],
+        "visible_containment": 0.9984901777809682,
+        "area_ratio": 1.0028832579618596,
+        "geometry_score": 0.928539960783579,
+        "visible_pixels": 417930,
+        "extrapolated_pixels": 1836,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 210,
+      "time_s": 6.996044444444444,
+      "status": "UNRESOLVED",
+      "reason": "no SAM instance passes full-page geometry; instance 0: ambiguous outer contour: multiple similarly supported quadrilaterals"
+    },
+    {
+      "index": 220,
+      "time_s": 7.329288888888889,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            532.008828845645,
+            695.818896338936
+          ],
+          [
+            1022.7963268029612,
+            1206.7381797323596
+          ],
+          [
+            520.7850082968923,
+            1559.666210128752
+          ],
+          [
+            68.69108607640415,
+            905.4551104206917
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            532.008828845645,
+            695.818896338936
+          ],
+          [
+            1022.7963268029612,
+            1206.7381797323596
+          ],
+          [
+            520.7850082968923,
+            1559.666210128752
+          ],
+          [
+            68.69108607640415,
+            905.4551104206917
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7420494699646644,
+          0.9918367346938776,
+          0.9937106918238994,
+          0.9802955665024631
+        ],
+        "visible_containment": 0.9985328808708935,
+        "area_ratio": 1.0027070402382194,
+        "geometry_score": 0.9267024117224042,
+        "visible_pixels": 413736,
+        "extrapolated_pixels": 1727,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 230,
+      "time_s": 7.662366666666666,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            520.6405154989646,
+            705.8935446279842
+          ],
+          [
+            1015.2705218509496,
+            1247.458067523273
+          ],
+          [
+            498.78316869400214,
+            1617.352034507348
+          ],
+          [
+            43.7852943274252,
+            927.64590341361
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            520.6405154989646,
+            705.8935446279842
+          ],
+          [
+            1015.2705218509496,
+            1247.458067523273
+          ],
+          [
+            498.78316869400214,
+            1617.352034507348
+          ],
+          [
+            43.7852943274252,
+            927.64590341361
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7542662116040956,
+          0.9881889763779528,
+          0.9939393939393939,
+          0.9761904761904762
+        ],
+        "visible_containment": 0.9981796823859611,
+        "area_ratio": 1.0018763618755548,
+        "geometry_score": 0.9279586283404242,
+        "visible_pixels": 446076,
+        "extrapolated_pixels": 1649,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 240,
+      "time_s": 7.995433333333334,
+      "status": "UNRESOLVED",
+      "reason": "no SAM instance passes full-page geometry; instance 0: ambiguous outer contour: multiple similarly supported quadrilaterals"
+    },
+    {
+      "index": 250,
+      "time_s": 8.32868888888889,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            535.3982774486319,
+            731.2346209885973
+          ],
+          [
+            1021.3330948632272,
+            1347.0176359986217
+          ],
+          [
+            475.6536617315668,
+            1728.6889485980535
+          ],
+          [
+            35.61051942390094,
+            967.4950131589227
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            535.3982774486319,
+            731.2346209885973
+          ],
+          [
+            1021.3330948632272,
+            1347.0176359986217
+          ],
+          [
+            475.6536617315668,
+            1728.6889485980535
+          ],
+          [
+            35.61051942390094,
+            967.4950131589227
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7476038338658147,
+          0.9924812030075187,
+          0.9943019943019943,
+          0.9819004524886877
+        ],
+        "visible_containment": 0.9986857253066476,
+        "area_ratio": 1.0019823477598675,
+        "geometry_score": 0.9288736361400171,
+        "visible_pixels": 502939,
+        "extrapolated_pixels": 1658,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 260,
+      "time_s": 8.661655555555555,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            546.0816040967792,
+            723.6012054233557
+          ],
+          [
+            1027.3708165215667,
+            1387.6223044212354
+          ],
+          [
+            451.4709698360313,
+            1771.1702632571769
+          ],
+          [
+            23.576799971186638,
+            963.3840325977093
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            546.0816040967792,
+            723.6012054233557
+          ],
+          [
+            1027.3708165215667,
+            1387.6223044212354
+          ],
+          [
+            451.4709698360313,
+            1771.1702632571769
+          ],
+          [
+            23.576799971186638,
+            963.3840325977093
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7439024390243902,
+          0.9891304347826086,
+          0.9917808219178083,
+          0.982532751091703
+        ],
+        "visible_containment": 0.9984867471292164,
+        "area_ratio": 1.0012824176871047,
+        "geometry_score": 0.926708369935417,
+        "visible_pixels": 545844,
+        "extrapolated_pixels": 1526,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 270,
+      "time_s": 8.994822222222222,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.9765625,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            560.8272256718353,
+            689.4709928348501
+          ],
+          [
+            1031.107630927106,
+            1393.622419269804
+          ],
+          [
+            428.25680122257114,
+            1767.7174942594002
+          ],
+          [
+            17.767648135597785,
+            924.5956928940985
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            560.8272256718353,
+            689.4709928348501
+          ],
+          [
+            1031.107630927106,
+            1393.622419269804
+          ],
+          [
+            428.25680122257114,
+            1767.7174942594002
+          ],
+          [
+            17.767648135597785,
+            924.5956928940985
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7366863905325444,
+          0.9893992932862191,
+          0.992,
+          0.9830508474576272
+        ],
+        "visible_containment": 0.9993326422858648,
+        "area_ratio": 1.0037233360258762,
+        "geometry_score": 0.9249117992165101,
+        "visible_pixels": 576902,
+        "extrapolated_pixels": 2533,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 4,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 280,
+      "time_s": 9.327955555555555,
+      "status": "UNRESOLVED",
+      "reason": "no SAM instance passes full-page geometry; instance 0: ambiguous outer contour: multiple similarly supported quadrilaterals"
+    },
+    {
+      "index": 290,
+      "time_s": 9.6611,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.984375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 1,
+        "geometry_rejected": [],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            570.4257382740592,
+            636.4728955983238
+          ],
+          [
+            951.5398381630214,
+            1362.9803098934565
+          ],
+          [
+            326.6445179575995,
+            1657.0782696745978
+          ],
+          [
+            21.79790594502797,
+            822.8680038271776
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            570.4257382740592,
+            636.4728955983238
+          ],
+          [
+            951.5398381630214,
+            1362.9803098934565
+          ],
+          [
+            326.6445179575995,
+            1657.0782696745978
+          ],
+          [
+            21.79790594502797,
+            822.8680038271776
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.7896341463414634,
+          0.9927536231884058,
+          0.9915492957746479,
+          0.974025974025974
+        ],
+        "visible_containment": 0.9992729156452642,
+        "area_ratio": 1.0022719073476223,
+        "geometry_score": 0.9367635690978606,
+        "visible_pixels": 540515,
+        "extrapolated_pixels": 1621,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 4,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 300,
+      "time_s": 9.9943,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.984375,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            598.7560092868142,
+            596.4954452143387
+          ],
+          [
+            946.2529136737,
+            1342.347411805676
+          ],
+          [
+            298.62891280287636,
+            1602.1539821318456
+          ],
+          [
+            37.8047820177028,
+            759.8232045852272
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            598.7560092868142,
+            596.4954452143387
+          ],
+          [
+            946.2529136737,
+            1342.347411805676
+          ],
+          [
+            298.62891280287636,
+            1602.1539821318456
+          ],
+          [
+            37.8047820177028,
+            759.8232045852272
+          ]
+        ],
+        "out_of_frame": false,
+        "side_support": [
+          0.8054711246200608,
+          0.989247311827957,
+          0.9914772727272727,
+          0.9828326180257511
+        ],
+        "visible_containment": 0.9988173048139735,
+        "area_ratio": 1.0016601808201366,
+        "geometry_score": 0.9420910637182467,
+        "visible_pixels": 544519,
+        "extrapolated_pixels": 1548,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 2,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 310,
+      "time_s": 10.327388888888889,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 1,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 0,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            570.8019379237747,
+            556.2530718448935
+          ],
+          [
+            888.2440063862739,
+            1330.7133782814713
+          ],
+          [
+            202.76013731722836,
+            1569.804140569221
+          ],
+          [
+            -11.355006569353923,
+            704.8265063563724
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            570.8019379237747,
+            556.2530718448935
+          ],
+          [
+            888.2440063862739,
+            1330.7133782814713
+          ],
+          [
+            202.76013731722836,
+            1569.804140569221
+          ],
+          [
+            0.0,
+            750.6982113677367
+          ],
+          [
+            0.0,
+            701.9285724901395
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.8203592814371258,
+          0.993103448275862,
+          0.9970326409495549,
+          0.9914893617021276
+        ],
+        "visible_containment": 0.9991140789660286,
+        "area_ratio": 1.002134264309113,
+        "geometry_score": 0.9502827566602563,
+        "visible_pixels": 571157,
+        "extrapolated_pixels": 1725,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 2,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    },
+    {
+      "index": 320,
+      "time_s": 10.660644444444445,
+      "status": "PASS",
+      "selection": {
+        "instance_score": 0.98046875,
+        "instances": 1,
+        "min_score": 0.5,
+        "instance_margin": 0.1,
+        "selection": "geometric-maximal-page/v1",
+        "selected_instance": 0,
+        "model_instances": 2,
+        "geometry_rejected": [
+          {
+            "instance": 1,
+            "reason": "fewer than four supported page sides"
+          }
+        ],
+        "nested_instances": []
+      },
+      "geometry": {
+        "method": "supported-boundary-lines/v4-clipped",
+        "target": "planar full-page hypothesis",
+        "quad": [
+          [
+            553.0668643977906,
+            530.7251284418851
+          ],
+          [
+            858.5814892845426,
+            1346.829602658559
+          ],
+          [
+            129.35478980779882,
+            1578.0110130306307
+          ],
+          [
+            -59.77547638837539,
+            669.900145126357
+          ]
+        ],
+        "clipped_polygon": [
+          [
+            553.0668643977906,
+            530.7251284418851
+          ],
+          [
+            858.5814892845426,
+            1346.829602658559
+          ],
+          [
+            129.35478980779882,
+            1578.0110130306307
+          ],
+          [
+            0.0,
+            956.9126938536692
+          ],
+          [
+            0.0,
+            656.325278688437
+          ]
+        ],
+        "out_of_frame": true,
+        "side_support": [
+          0.8189655172413793,
+          0.9901639344262295,
+          0.9841897233201581,
+          0.9867256637168141
+        ],
+        "visible_containment": 0.9991850940388493,
+        "area_ratio": 1.0016752648444374,
+        "geometry_score": 0.9448436831917015,
+        "visible_pixels": 616022,
+        "extrapolated_pixels": 1534,
+        "thresholds": {
+          "line_tolerance_px": 2.5,
+          "min_segment_fraction": 0.1,
+          "min_side_support": 0.55,
+          "min_visible_containment": 0.995,
+          "max_area_ratio": 1.65,
+          "min_area_fraction": 0.005,
+          "min_angle_degrees": 20.0,
+          "ambiguity_margin": 0.02
+        },
+        "candidate_count": 1,
+        "distinct_candidate_count": 1,
+        "interpretation": "geometric pseudo-label, not observed ground truth behind occluders"
+      }
+    }
+  ]
+}

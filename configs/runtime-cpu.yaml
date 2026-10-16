@@ -1,0 +1,12 @@
+# Portable serial/debug profile. Official training requires CUDA.
+runtime:
+  device: cpu
+  workers: 1
+  io_threads: 1
+  queue_size: 2
+  threads_per_worker: 1
+  dataloader_workers: 0
+  prefetch_factor: 1
+  persistent_workers: false
+  pin_memory: false
+  min_free_bytes: 0

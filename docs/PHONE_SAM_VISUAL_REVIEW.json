@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "scope": "real CUDA SAM generation and artifact checks for visual review; no segmentation-quality benchmark or full dataset preparation",
+  "videos": 9,
+  "sampled_frames": 271,
+  "masks": 268,
+  "errors": 0,
+  "no_detection": [
+    {
+      "video": "video_20261011_005259.mp4",
+      "index": 200,
+      "time_s": 6.652911111111111,
+      "error": null
+    },
+    {
+      "video": "video_20261011_005259.mp4",
+      "index": 310,
+      "time_s": 10.496544444444444,
+      "error": null
+    },
+    {
+      "video": "video_20261011_005259.mp4",
+      "index": 320,
+      "time_s": 10.822933333333333,
+      "error": null
+    }
+  ],
+  "max_masks": 1,
+  "step": 10,
+  "min_score": 0.5,
+  "instance_selection": "largest-area/nonoverlapping-v2",
+  "weights_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+  "manual_verified": false,
+  "evidence": "tools/phone_testset/data/sam-review-nonoverlap-v1/review.json",
+  "gallery": "tools/phone_testset/data/sam-review-nonoverlap-v1/index.html",
+  "checks": [
+    "source video hashes before inference",
+    "mask 0/1 format, shape, area and hash",
+    "original timestamps and rotated dimensions",
+    "all gallery links and generated viewer JavaScript"
+  ]
+}

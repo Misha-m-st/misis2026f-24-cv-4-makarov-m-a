@@ -1,0 +1,319 @@
+"""uv run --extra phone-testset tools/phone_testset/prepare.py --help"""
+
+import argparse
+import hashlib
+import json
+import shutil
+import sys
+from dataclasses import asdict
+from pathlib import Path
+from typing import Protocol
+
+import cv2
+import numpy as np
+from PIL import Image
+
+# Script execution and package imports share the same modules, without importing document_vos.
+if __package__ is None or __package__ == "":
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from tools.phone_testset.geometry import (  # noqa: E402
+    GEOMETRY_METHOD,
+    GeometryOptions,
+    binary,
+    recover_quad,
+)
+from tools.phone_testset.sam import INSTANCE_SELECTION, REVISION, SAM, compatibility  # noqa: E402
+from tools.phone_testset.video import extract  # noqa: E402
+
+ANNOTATION_FAILURE_POLICY = "initial-required/skip-later-v1"
+
+
+class Annotator(Protocol):
+    def predict(self, rgb: np.ndarray) -> tuple[np.ndarray, dict]: ...
+
+
+def sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+def write_json(path: Path, value: dict) -> None:
+    with path.open("x", encoding="utf-8") as stream:
+        json.dump(value, stream, ensure_ascii=False, indent=2, allow_nan=False)
+        stream.write("\n")
+
+
+def write_jsonl(path: Path, rows: list[dict]) -> None:
+    with path.open("x", encoding="utf-8") as stream:
+        for row in rows:
+            stream.write(json.dumps(row, ensure_ascii=False, allow_nan=False) + "\n")
+
+
+def prepare(
+    videos: list[Path],
+    output: Path,
+    predictor: Annotator,
+    *,
+    step: int = 10,
+    ffmpeg: str = "ffmpeg",
+    ffprobe: str = "ffprobe",
+    identity: dict | None = None,
+    geometry: GeometryOptions | None = None,
+    recreate: bool = False,
+) -> dict:
+    if step < 1:
+        raise ValueError("annotation step must be positive")
+    geometry = geometry or GeometryOptions()
+    videos, output = [v.resolve() for v in videos], output.resolve()
+    if not videos or len(set(videos)) != len(videos):
+        raise ValueError("supply distinct local videos")
+    if any(v.is_relative_to(output) for v in videos):
+        raise ValueError("source videos must be outside the output directory")
+    inputs = {
+        "schema": "phone-testset/sam-geometry-v1",
+        "step": step,
+        "model": identity or {},
+        "geometry": asdict(geometry),
+        "geometry_method": GEOMETRY_METHOD,
+        "annotation_failure_policy": ANNOTATION_FAILURE_POLICY,
+        "videos": [{"path": str(v), "sha256": sha256(v)} for v in videos],
+    }
+    if output.exists():
+        old = json.loads((output / "preparation.json").read_text())
+        if old.get("schema") != inputs["schema"]:
+            raise ValueError("refusing to overwrite an unrelated dataset directory")
+        if not recreate:
+            if old != inputs:
+                raise ValueError(
+                    "preparation inputs changed; use new output or explicit --recreate"
+                )
+            if not all(
+                (output / name).is_file()
+                for name in ["manifest.jsonl", "annotations.jsonl", "preparation_result.json"]
+            ):
+                raise ValueError("preparation incomplete; use new output or explicit --recreate")
+            return {"status": "EXISTING", "output": str(output), "review_pngs_restored": 0}
+        shutil.rmtree(output)
+    output.mkdir(parents=True)
+    (output / "review_initial").mkdir()
+    write_json(output / "preparation.json", inputs)
+    rows, annotations = [], []
+    for source in inputs["videos"]:
+        video = Path(source["path"])
+        name = hashlib.sha256(str(video).encode()).hexdigest()[:16]
+        info = {
+            "status": "eligible",
+            "reason": None,
+            "annotation_step": step,
+            "annotation_failure_policy": ANNOTATION_FAILURE_POLICY,
+            "annotation_failures": [],
+        }
+        row = {
+            "schema_version": 1,
+            "dataset": "custom",
+            "video": name,
+            "document": name,
+            "template": name,
+            "group": name,
+            "frames": [],
+            "time_source": "ffprobe source PTS * stream time_base",
+            "provenance": {
+                "source_video": source,
+                "model": identity or {},
+                "phone_testset": info,
+                "annotation_source": f"SAM 3 + {GEOMETRY_METHOD}",
+                "annotation_kind": "geometric_pseudo_labels",
+                "manual_mask_verification": False,
+                "target": "planar full-page hypothesis including inferred occluded pixels",
+            },
+        }
+        initial, initial_quad, initial_visible = None, None, None
+        try:
+            frames, timing = extract(video, output / "frames" / name, ffmpeg, ffprobe)
+            row["frames"] = frames
+            info.update(timing)
+            coverage = {
+                "sampled_after_initial": len(range(0, len(frames), step)) - 1,
+                "accepted_after_initial": 0,
+                "failed_after_initial": 0,
+                "fraction": None,
+            }
+            info["annotation_coverage"] = coverage
+            raw_dir, masks_dir = output / "visible_masks" / name, output / "masks" / name
+            raw_dir.mkdir(parents=True)
+            masks_dir.mkdir(parents=True)
+            for i in range(0, len(frames), step):
+                evidence = {"video": f"custom/{name}", "index": i, "frame": frames[i]["id"]}
+                try:
+                    with Image.open(frames[i]["path"]) as image:
+                        rgb = np.asarray(image.convert("RGB"))
+                    visible, model_info = predictor.predict(rgb)
+                    visible = binary(visible, rgb.shape[:2])
+                    raw_path = raw_dir / f"{i:06d}.png"
+                    Image.fromarray(visible).save(raw_path)
+                    evidence.update(
+                        model=model_info,
+                        visible_mask=str(raw_path),
+                        visible_sha256=sha256(raw_path),
+                    )
+                    mask, geometry_info = recover_quad(visible, geometry)
+                    path = masks_dir / f"{i:06d}.png"
+                    Image.fromarray(mask).save(path)
+                    frames[i]["mask"] = str(path)
+                    evidence.update(
+                        status="accepted",
+                        geometry=geometry_info,
+                        mask=str(path),
+                        mask_sha256=sha256(path),
+                    )
+                    if i == 0:
+                        initial, initial_quad = mask, geometry_info["quad"]
+                        initial_visible = visible
+                    else:
+                        coverage["accepted_after_initial"] += 1
+                except Exception as exc:
+                    frames[i].pop("mask", None)
+                    evidence.update(status="failed", reason=f"{type(exc).__name__}: {exc}")
+                    info["annotation_failures"].append(
+                        {"index": i, "frame": frames[i]["id"], "reason": evidence["reason"]}
+                    )
+                    if i == 0:
+                        raise ValueError(f"annotation frame {i}: {evidence['reason']}") from exc
+                    coverage["failed_after_initial"] += 1
+                finally:
+                    annotations.append(evidence)
+                    if coverage["sampled_after_initial"]:
+                        coverage["fraction"] = (
+                            coverage["accepted_after_initial"] / coverage["sampled_after_initial"]
+                        )
+            with Image.open(frames[0]["path"]) as image:
+                preview = np.asarray(image.convert("RGB")).copy()
+            selected = initial.astype(bool)
+            preview[selected] = (0.65 * preview[selected] + 0.35 * np.array([0, 255, 0])).astype(
+                np.uint8
+            )
+            cv2.polylines(preview, [np.rint(initial_quad).astype(np.int32)], True, (255, 160, 0), 2)
+            contours, _ = cv2.findContours(
+                initial_visible, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+            )
+            cv2.drawContours(preview, contours, -1, (0, 100, 255), 1)
+            Image.fromarray(preview).save(output / "review_initial" / f"{name}.png")
+        except Exception as exc:
+            info.update(status="ineligible", reason=f"{type(exc).__name__}: {exc}")
+        rows.append(row)
+    write_jsonl(output / "manifest.jsonl", rows)
+    write_jsonl(output / "annotations.jsonl", annotations)
+    eligible = sum(row["provenance"]["phone_testset"]["status"] == "eligible" for row in rows)
+    result = {
+        "status": "COMPLETE" if eligible else "NO_ELIGIBLE_VIDEOS",
+        "videos": len(rows),
+        "eligible": eligible,
+        "ineligible": len(rows) - eligible,
+        "failed_annotations": sum(
+            len(row["provenance"]["phone_testset"]["annotation_failures"]) for row in rows
+        ),
+        "annotation_failure_policy": ANNOTATION_FAILURE_POLICY,
+        "output": str(output),
+        "annotation": "automatic geometric pseudo-labels; no manual verification",
+    }
+    write_json(output / "preparation_result.json", result)
+    return result
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Phone test set: SAM 3 image + planar page geometry"
+    )
+    parser.add_argument("--check-compatibility", action="store_true")
+    parser.add_argument("--videos", nargs="+", type=Path)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--weights", type=Path)
+    parser.add_argument("--prompt", default="sheet of paper")
+    parser.add_argument("--device", choices=["cuda", "cpu"], default="cuda")
+    parser.add_argument("--step", type=int, default=10)
+    parser.add_argument("--min-score", type=float, default=0.5)
+    parser.add_argument(
+        "--max-masks", type=int, default=1, help="Keep at most N masks, largest first (default: 1)"
+    )
+    parser.add_argument(
+        "--instance-margin",
+        type=float,
+        default=0.1,
+        help="Legacy option; unused for largest-area selection",
+    )
+    parser.add_argument("--min-side-support", type=float, default=0.55)
+    parser.add_argument("--max-area-ratio", type=float, default=1.65)
+    parser.add_argument("--ffmpeg", default="ffmpeg")
+    parser.add_argument("--ffprobe", default="ffprobe")
+    parser.add_argument("--recreate", action="store_true")
+    args = parser.parse_args()
+    if args.max_masks < 1:
+        parser.error("--max-masks must be positive")
+    try:
+        if args.check_compatibility:
+            result = compatibility()
+            print(json.dumps(result, ensure_ascii=False, indent=2))
+            raise SystemExit(0 if result["image_import"]["status"] == "PASS" else 2)
+        if not all([args.videos, args.output, args.weights]):
+            parser.error("preparation requires --videos, --output and --weights")
+        identity = {
+            "name": "SAM 3 image",
+            "revision": REVISION,
+            "weights_sha256": sha256(args.weights),
+            "prompt": args.prompt,
+            "min_score": args.min_score,
+            "max_masks": args.max_masks,
+            "instance_margin": args.instance_margin,
+            "device": args.device,
+            "instance_selection": INSTANCE_SELECTION,
+        }
+        geometry = GeometryOptions(
+            min_side_support=args.min_side_support, max_area_ratio=args.max_area_ratio
+        )
+
+        class LazyModel:
+            model = None
+            error = None
+
+            def predict(self, rgb):
+                if self.error is not None:
+                    raise self.error
+                if self.model is None:
+                    try:
+                        self.model = SAM(
+                            args.weights,
+                            args.device,
+                            args.prompt,
+                            args.min_score,
+                            args.instance_margin,
+                            geometry=geometry,
+                            max_masks=args.max_masks,
+                        )
+                    except Exception as exc:
+                        self.error = exc
+                        raise
+                return self.model.predict(rgb)
+
+        result = prepare(
+            args.videos,
+            args.output,
+            LazyModel(),
+            step=args.step,
+            geometry=geometry,
+            identity=identity,
+            ffmpeg=args.ffmpeg,
+            ffprobe=args.ffprobe,
+            recreate=args.recreate,
+        )
+    except (OSError, ValueError, ImportError) as exc:
+        print(f"Error: {exc}", file=sys.stderr)
+        raise SystemExit(2) from exc
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+
+
+if __name__ == "__main__":
+    main()

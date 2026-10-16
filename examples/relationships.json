@@ -1,0 +1,10 @@
+{
+  "midv500/21_esp_id/images/CA": {
+    "template": "midv-template:esp_id",
+    "group": "related:esp_id"
+  },
+  "midv2020/esp_id/00": {
+    "template": "midv-template:esp_id",
+    "group": "related:esp_id"
+  }
+}

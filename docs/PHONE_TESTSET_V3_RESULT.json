@@ -1,0 +1,129 @@
+{
+  "scope": "full real preparation of nine phone videos, original frames and timestamps, annotation step 10; strict rejection on first annotation failure",
+  "result": {
+    "status": "NO_ELIGIBLE_VIDEOS",
+    "videos": 9,
+    "eligible": 0,
+    "ineligible": 9,
+    "output": "/home/mikhail/dev/cutie_v1/misis2026f-24-cv-4-makarov-m-a/tools/phone_testset/data/cutie-test-v3",
+    "annotation": "automatic geometric pseudo-labels; no manual verification"
+  },
+  "preparation": {
+    "schema": "phone-testset/sam-geometry-v1",
+    "step": 10,
+    "model": {
+      "name": "SAM 3 image",
+      "revision": "0570b3a5be9c4e694f23d85232fb55f4a6f1f7fc",
+      "weights_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+      "prompt": "sheet of paper",
+      "min_score": 0.5,
+      "instance_margin": 0.1,
+      "device": "cuda",
+      "instance_selection": "geometric-maximal-page/v1"
+    },
+    "geometry": {
+      "line_tolerance_px": 2.5,
+      "min_segment_fraction": 0.1,
+      "min_side_support": 0.55,
+      "min_visible_containment": 0.995,
+      "max_area_ratio": 1.65,
+      "min_area_fraction": 0.005,
+      "min_angle_degrees": 20.0,
+      "ambiguity_margin": 0.02
+    },
+    "geometry_method": "supported-boundary-lines/v3",
+    "videos": [
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005046.mp4",
+        "sha256": "79b68cf02c43847c8a8a6eb831b188e2f773e1ad0bedb5fa08516f2746430aae"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005103.mp4",
+        "sha256": "decc4f63c77ecb70f8d086711e76fb1a4f99650a554c809e73edd1e54c6851e1"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005115.mp4",
+        "sha256": "728cf453e89be6189288d99f3b385af75caa0490a23d260c2bef6cc25d630392"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005126.mp4",
+        "sha256": "685fdf127655088bba78040ea26b21d3c5d92974444e3022313c0db68010aca4"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005139.mp4",
+        "sha256": "bf23945e7bafd10a32021a104d4db02c9b29b27e884ebb345ac85f4e1bcb5da9"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005156.mp4",
+        "sha256": "602ece8f379e6c0bbd7e869f8793c32dbae648e40cdd97f606926f3736be0b07"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005213.mp4",
+        "sha256": "29b860167406aedb681f2eaad0e851efc7952a0da97e24b2dd79d2640d43dc77"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005225.mp4",
+        "sha256": "3536d6c9ed553b7e2ddd9b09512d760671c6587160d4f502a1b99b85dbe07cbb"
+      },
+      {
+        "path": "/home/mikhail/Видео/cutie_test/video_20261011_005259.mp4",
+        "sha256": "14cf7e127fc55cd2222f8e62548077c21966aa09041ebb23b9ab307bcaa51d73"
+      }
+    ]
+  },
+  "manifest_sha256": "f2f67931ecfd71142a3c44e328766cfb754a9eb1cd948af1c6c35bd874fdebec",
+  "annotation_counts": {
+    "accepted": 20,
+    "failed": 9
+  },
+  "initial_masks_accepted": 6,
+  "manual_mask_verification": false,
+  "quality_evaluation": "NOT_RUN",
+  "rejections": [
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005046.mp4",
+      "video": "9a9c14a14182e244",
+      "reason": "ValueError: annotation frame 90: ValueError: no SAM instance passes full-page geometry; instance 0: page touches frame border: full contour is underdetermined"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005103.mp4",
+      "video": "5682555958f22e6e",
+      "reason": "ValueError: annotation frame 30: ValueError: no SAM instance passes full-page geometry; instance 0: fewer than four supported page sides; instance 1: no quadrilateral passes side-support, containment and expansion gates"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005115.mp4",
+      "video": "c427d81da4bf1aac",
+      "reason": "ValueError: annotation frame 10: ValueError: no SAM instance passes full-page geometry; instance 0: no quadrilateral passes side-support, containment and expansion gates"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005126.mp4",
+      "video": "d5cfd9c646ce1244",
+      "reason": "ValueError: annotation frame 20: ValueError: no SAM instance passes full-page geometry; instance 0: page touches frame border: full contour is underdetermined; instance 1: page touches frame border: full contour is underdetermined; instance 2: page touches frame border: full contour is underdetermined"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005139.mp4",
+      "video": "18b481ce825fd626",
+      "reason": "ValueError: annotation frame 30: ValueError: no SAM instance passes full-page geometry; instance 0: no quadrilateral passes side-support, containment and expansion gates"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005156.mp4",
+      "video": "886921738c0c0208",
+      "reason": "ValueError: annotation frame 0: ValueError: no SAM instance passes full-page geometry; instance 0: page touches frame border: full contour is underdetermined; instance 1: page touches frame border: full contour is underdetermined"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005213.mp4",
+      "video": "ddc075f0c09da8d4",
+      "reason": "ValueError: annotation frame 0: ValueError: no SAM instance passes full-page geometry; instance 0: page touches frame border: full contour is underdetermined"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005225.mp4",
+      "video": "5146fee11243500c",
+      "reason": "ValueError: annotation frame 20: ValueError: no SAM instance passes full-page geometry; instance 0: ambiguous outer contour: multiple similarly supported quadrilaterals"
+    },
+    {
+      "source": "/home/mikhail/Видео/cutie_test/video_20261011_005259.mp4",
+      "video": "04a0425acb1f4fbe",
+      "reason": "ValueError: annotation frame 0: ValueError: no SAM instance passes full-page geometry; instance 0: ambiguous outer contour: multiple similarly supported quadrilaterals"
+    }
+  ]
+}

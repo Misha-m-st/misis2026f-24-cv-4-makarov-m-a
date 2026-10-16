@@ -1,0 +1,298 @@
+{
+  "status": "PASS",
+  "scope": "post-processing of cached real CUDA SAM outputs; no new model inference or full dataset preparation",
+  "instance_selection": "largest-area/nonoverlapping-v2",
+  "max_masks": 3,
+  "sampled_frames": 33,
+  "input_masks": 64,
+  "output_masks": 53,
+  "overlapping_output_pairs": 0,
+  "source_evidence": "tools/phone_testset/data/sam-preview-005046/preview.json",
+  "weights_sha256": "9999e2341ceef5e136daa386eecb55cb414446a00ac2b55eb2dfd2f7c3cf8c9e",
+  "records": [
+    {
+      "index": 0,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 10,
+      "input_masks": 4,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 20,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 30,
+      "input_masks": 4,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 40,
+      "input_masks": 4,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 50,
+      "input_masks": 4,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 60,
+      "input_masks": 2,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 70,
+      "input_masks": 2,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 80,
+      "input_masks": 2,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 90,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 100,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 110,
+      "input_masks": 3,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 120,
+      "input_masks": 2,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 130,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 140,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 150,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 160,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 170,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 180,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 190,
+      "input_masks": 3,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 200,
+      "input_masks": 3,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 210,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 220,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 230,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 240,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 250,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 260,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 270,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 280,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 290,
+      "input_masks": 1,
+      "retained_indices": [
+        0
+      ],
+      "output_masks": 1
+    },
+    {
+      "index": 300,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 310,
+      "input_masks": 2,
+      "retained_indices": [
+        1,
+        0
+      ],
+      "output_masks": 2
+    },
+    {
+      "index": 320,
+      "input_masks": 2,
+      "retained_indices": [
+        0,
+        1
+      ],
+      "output_masks": 2
+    }
+  ]
+}

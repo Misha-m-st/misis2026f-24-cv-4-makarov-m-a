@@ -1,0 +1,23 @@
+.venv/
+.venv-cutie/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.validation-cache.sqlite3*
+*.egg-info/
+data/
+weights/
+results/
+artifacts/
+external/
+*.pth
+*.pt
+*.ckpt
+dist/
+*.local.yaml
+
+# Local reports, rendered videos, and office lock files.
+/*.odt
+/*.mp4
+.~lock.*#

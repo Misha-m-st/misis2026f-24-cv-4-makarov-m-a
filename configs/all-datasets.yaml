@@ -1,0 +1,23 @@
+# Paths are relative to this YAML. Normalize new archives first.
+selected: [smartdoc2015, midv2020, midv500, midv2019, midvholo, dlc2021]
+output: ../data/prepared/manifest-v2.jsonl
+datasets:
+  smartdoc2015:
+    root: ../data/raw/smartdoc2015
+  midv2020:
+    root: ../data/raw/midv2020/clips
+  midv500:
+    root: ../data/normalized-v2/midv500
+    require_complete_archives: true
+  midv2019:
+    root: ../data/normalized-v2/midv2019
+    require_complete_archives: true
+  midvholo:
+    root: ../data/normalized-v2/midvholo
+    require_complete_archives: true
+  dlc2021:
+    root: ../data/normalized-v2/dlc2021/clips
+    require_complete_archives: true
+    # Published empty annotation projects cannot supply supervised examples.
+    # Every excluded clip and its source checksum are recorded in manifest metadata.
+    skip_empty_via: true

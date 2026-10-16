@@ -1,0 +1,23 @@
+# Пути YAML относительны каталогу configs. Укажите свои распакованные каталоги.
+selected: [smartdoc2015, midv2020]
+output: ../data/prepared/manifest-v1.jsonl
+datasets:
+  smartdoc2015:
+    root: ../data/raw/smartdoc2015
+  midv2020:
+    root: ../data/raw/midv2020/clips
+  midv500:
+    root: ../data/raw/midv500
+  midv2019:
+    root: ../data/raw/midv2019
+  midvlait:
+    root: ../data/raw/midvlait/dataset
+  midvholo:
+    root: ../data/raw/midvholo
+  dlc2021:
+    root: ../data/raw/dlc2021/clips
+  sidtd:
+    root: ../data/raw/sidtd
+    index: sequences.jsonl
+# При неизвестных или дополнительных связях создайте таблицу перед split:
+# relationships: ../data/relationships-v1.json

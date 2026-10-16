@@ -1,0 +1,12 @@
+# Starting point, not a hardware requirement. Benchmark on your machine.
+runtime:
+  device: cuda
+  workers: 4
+  io_threads: 4
+  queue_size: 8
+  threads_per_worker: 1
+  dataloader_workers: 4
+  prefetch_factor: 1
+  persistent_workers: true
+  pin_memory: true
+  min_free_bytes: 0
