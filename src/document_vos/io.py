@@ -78,6 +78,7 @@ def versions() -> dict[str, str]:
     result = {"python": platform.python_version(), "platform": platform.platform()}
     for name in [
         "document-vos",
+        "av",
         "numpy",
         "Pillow",
         "scipy",
@@ -108,3 +109,21 @@ def load_config(path: Path) -> dict:
     if not isinstance(cfg, dict):
         raise PipelineError(f"{path}: конфигурация должна быть YAML-словарём")
     return cfg
+
+
+def atomic_json(path: Path, value: Any) -> None:
+    """Replace a status file atomically; immutable artifact writes use write_json."""
+    import os
+    import tempfile
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    fd, name = tempfile.mkstemp(prefix=f".{path.name}-", dir=path.parent)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as stream:
+            json.dump(value, stream, ensure_ascii=False, indent=2, allow_nan=False)
+            stream.write("\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        Path(name).replace(path)
+    finally:
+        Path(name).unlink(missing_ok=True)

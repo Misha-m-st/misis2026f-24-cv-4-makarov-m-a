@@ -3,7 +3,7 @@
 import numpy as np
 from PIL import Image, ImageDraw
 
-from .io import PipelineError
+from document_vos.io import PipelineError
 
 
 def validate_quad(points: list[list[float]]) -> np.ndarray:

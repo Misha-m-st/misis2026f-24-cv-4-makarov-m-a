@@ -1,5 +1,0 @@
-archives: ../data/archives
-output: ../data/normalized-v2
-datasets: [midv500, midv2019, midvholo, dlc2021]
-# Explicitly opt in only after reviewing the local normalization plan.
-delete_verified_zip: false

@@ -1,3 +1,3 @@
-from .cli import main
+from document_vos.cli import main
 
 main()

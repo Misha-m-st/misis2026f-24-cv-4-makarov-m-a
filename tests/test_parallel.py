@@ -8,9 +8,9 @@ import pytest
 
 from document_vos import parallel
 from document_vos.data import validate_data
-from document_vos.export import export_training, validate_export
+from document_vos.data.export import export_training, validate_export
+from document_vos.data.split import split_manifest
 from document_vos.io import PipelineError, read_json
-from document_vos.split import split_manifest
 
 
 def _probe(task):

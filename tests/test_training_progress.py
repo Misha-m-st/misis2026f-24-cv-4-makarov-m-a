@@ -5,8 +5,8 @@ from types import ModuleType
 
 import pytest
 
+from document_vos.cutie.training_progress import MARKER, install_metrics_output, run_with_progress
 from document_vos.parallel import Progress
-from document_vos.training_progress import MARKER, install_metrics_output, run_with_progress
 
 
 def test_export_progress_prints_only_endpoints(monkeypatch, capsys):

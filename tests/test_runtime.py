@@ -47,11 +47,13 @@ def test_loader_settings_are_explicit():
 
 def test_cli_runtime_overrides_legacy_workers_and_cli_overrides_runtime(tmp_path, monkeypatch):
     import document_vos.runtime as runtime_module
-    from document_vos.cli import dispatch, parser
+    from document_vos.diagnostics import dispatch, parser
 
     captured = []
     monkeypatch.setattr(runtime_module, "_current", Runtime())
-    monkeypatch.setattr("document_vos.training.train", lambda *a, **kw: captured.append(kw) or {})
+    monkeypatch.setattr(
+        "document_vos.cutie.training.train", lambda *a, **kw: captured.append(kw) or {}
+    )
     config = tmp_path / "train.yaml"
     config.write_text(
         "cutie_root: cutie\nweights: weights\nexport: export\noutput: output\nworkers: 7\n"

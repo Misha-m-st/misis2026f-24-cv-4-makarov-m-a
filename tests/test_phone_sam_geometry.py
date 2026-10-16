@@ -7,19 +7,19 @@ import numpy as np
 import pytest
 from PIL import Image
 
+from document_vos.cutie.inference import propagate
+from document_vos.data.input_folder import select_input_folder
 from document_vos.evaluation import evaluate
-from document_vos.inference import propagate
-from document_vos.input_folder import select_input_folder
 from document_vos.io import read_json, read_jsonl, sha256
-from tools.phone_testset.geometry import (
+from document_vos.sam.geometry import (
     GeometryOptions,
     equivalent_polygons,
     equivalent_quads,
     rasterize_quad,
     recover_quad,
 )
-from tools.phone_testset.prepare import prepare
-from tools.phone_testset.sam import choose_mask, choose_page_mask, limit_masks
+from document_vos.sam.prepare import prepare
+from document_vos.sam.sam import choose_page_mask, limit_masks
 
 
 @pytest.fixture
@@ -139,22 +139,6 @@ def test_expansion_gate_does_not_silently_relax(page):
         recover_quad(mask, replace(GeometryOptions(), max_area_ratio=1.01))
 
 
-def test_instance_selection_requires_nonempty_unambiguous_binary_mask(page):
-    mask, _ = page
-    selected, info = choose_mask(mask[None, None], np.array([0.9]), mask.shape, 0.5, 0.1)
-    assert np.array_equal(selected, mask) and info["instance_score"] == 0.9
-    for masks, scores in [
-        (np.array([mask, mask]), np.array([0.9, 0.88])),
-        (mask[None], np.array([np.nan])),
-        (mask[None], np.array([0.1])),
-        (np.full_like(mask, 255)[None], np.array([0.9])),
-        (np.zeros_like(mask)[None], np.array([0.9])),
-        (np.empty((0, *mask.shape)), np.array([])),
-    ]:
-        with pytest.raises(ValueError):
-            choose_mask(masks, scores, mask.shape, 0.5, 0.1)
-
-
 def test_page_selection_uses_largest_mask_not_highest_confidence(page):
     full, _ = page
     half = full.copy()
@@ -166,7 +150,6 @@ def test_page_selection_uses_largest_mask_not_highest_confidence(page):
         np.array([0.8, 0.9, 0.88]),
         full.shape,
         0.5,
-        0.1,
         GeometryOptions(),
     )
     assert np.array_equal(selected, full)
@@ -180,7 +163,7 @@ def test_page_selection_picks_largest_even_for_distinct_documents():
     masks[0, 40:260, 30:210] = 1
     masks[1, 40:260, 290:450] = 1
     selected, info = choose_page_mask(
-        masks, np.array([0.88, 0.9]), (300, 500), 0.5, 0.1, GeometryOptions(), max_masks=2
+        masks, np.array([0.88, 0.9]), (300, 500), 0.5, GeometryOptions(), max_masks=2
     )
     assert np.array_equal(selected, masks[0]) and info["selected_instance"] == 0
     assert info["instances"] == 2
@@ -190,7 +173,6 @@ def test_page_selection_picks_largest_even_for_distinct_documents():
             np.array([0.9]),
             (300, 500),
             0.5,
-            0.1,
             GeometryOptions(),
         )
 
@@ -264,7 +246,6 @@ def test_largest_mask_geometry_error_does_not_fall_back_to_smaller_page(page):
             np.array([0.9, 0.8]),
             page_mask.shape,
             0.5,
-            0.1,
             GeometryOptions(),
             max_masks=2,
         )
@@ -293,7 +274,7 @@ def extracted(tmp_path, monkeypatch, page):
     source = tmp_path / "video-source"
     source.write_bytes(b"synthetic source identity")
 
-    def extract(video, directory, ffmpeg, ffprobe):
+    def extract(video, directory):
         directory.mkdir(parents=True)
         frames = []
         for i in range(23):
@@ -307,7 +288,7 @@ def extracted(tmp_path, monkeypatch, page):
             "rotation_degrees": 0,
         }
 
-    monkeypatch.setattr("tools.phone_testset.prepare.extract", extract)
+    monkeypatch.setattr("document_vos.sam.prepare.extract", extract)
     return [source]
 
 
@@ -318,7 +299,7 @@ def test_prepare_and_folder_selection_accept_partial_exit_on_initial_frame(
     visible, _ = rasterize_quad(quad, page[0].shape)
     assert visible[:, -1].any()
     output = tmp_path / "clipped-phone"
-    result = prepare(extracted, output, SyntheticSAM(visible))
+    result = prepare(extracted, output, SyntheticSAM(visible), step=10)
     assert result["eligible"] == 1
     sequences, selection = select_input_folder(output)
     assert selection["included"] == 1 and selection["excluded"] == 0
@@ -333,7 +314,7 @@ def test_prepare_retains_visible_and_full_page_masks_and_no_png_restore(tmp_path
     visible[:55, 145:] = 0
     model = SyntheticSAM(visible)
     folder = tmp_path / "set"
-    result = prepare(extracted, folder, model, identity={"model": "synthetic"})
+    result = prepare(extracted, folder, model, step=10, identity={"model": "synthetic"})
     assert result["eligible"] == 1 and model.calls == 3
     row = read_jsonl(folder / "manifest.jsonl")[0]
     assert len(row["frames"]) == 23
@@ -352,7 +333,8 @@ def test_prepare_retains_visible_and_full_page_masks_and_no_png_restore(tmp_path
     review.unlink()
     assert not select_input_folder(folder)[0]
     assert (
-        prepare(extracted, folder, model, identity={"model": "synthetic"})["status"] == "EXISTING"
+        prepare(extracted, folder, model, step=10, identity={"model": "synthetic"})["status"]
+        == "EXISTING"
     )
     assert model.calls == 3 and not review.exists()
     assert assets == {p: sha256(p) for p in assets}
@@ -377,7 +359,7 @@ def test_failed_initial_annotation_rejects_sequence_without_fake_masks(
         visible[:] = 0
     folder = tmp_path / "failed"
     model = SyntheticSAM(visible, fail_at=1 if failure == "initial_model" else None)
-    assert prepare(extracted, folder, model)["ineligible"] == 1
+    assert prepare(extracted, folder, model, step=10)["ineligible"] == 1
     assert not list((folder / "review_initial").glob("*.png"))
     assert not select_input_folder(folder)[0]
     row = read_jsonl(folder / "manifest.jsonl")[0]
@@ -404,7 +386,7 @@ def test_failed_later_annotation_keeps_video_and_all_frames_for_cutie(
 
     model = FaultySAM(page[0])
     folder = tmp_path / "sparse"
-    result = prepare(extracted, folder, model)
+    result = prepare(extracted, folder, model, step=10)
     assert result["eligible"] == 1 and result["failed_annotations"] == 1
     assert model.calls == 3  # Continue to frame 20 after the failure at frame 10.
     row = read_jsonl(folder / "manifest.jsonl")[0]
@@ -460,7 +442,7 @@ def test_all_later_annotations_may_fail_without_excluding_video(tmp_path, extrac
 
     folder = tmp_path / "initial-only"
     model = OnlyInitialSAM(page[0])
-    assert prepare(extracted, folder, model)["eligible"] == 1
+    assert prepare(extracted, folder, model, step=10)["eligible"] == 1
     assert model.calls == 3 and len(select_input_folder(folder)[0]) == 1
     row = read_jsonl(folder / "manifest.jsonl")[0]
     assert [i for i, frame in enumerate(row["frames"]) if "mask" in frame] == [0]
@@ -469,7 +451,7 @@ def test_all_later_annotations_may_fail_without_excluding_video(tmp_path, extrac
 
 def test_geometric_pseudo_label_is_named_in_evaluation(tmp_path, extracted, page):
     folder = tmp_path / "prepared"
-    prepare(extracted, folder, SyntheticSAM(page[0]))
+    prepare(extracted, folder, SyntheticSAM(page[0]), step=10)
     sequences, selection = select_input_folder(folder)
     from test_inference_evaluation import SpyPredictor, metadata
 
@@ -495,7 +477,7 @@ def test_sam_adapter_local_strict_checkpoint_and_bfloat16_output(tmp_path, monke
 
     import torch
 
-    from tools.phone_testset.sam import SAM
+    from document_vos.sam.sam import SAM
 
     mask, _ = page
 
@@ -536,7 +518,7 @@ def test_sam_adapter_local_strict_checkpoint_and_bfloat16_output(tmp_path, monke
         ("sam3.model.sam3_image_processor", processor_module),
     ]:
         monkeypatch.setitem(sys.modules, name, module)
-    monkeypatch.setattr("tools.phone_testset.sam.check_installation", lambda: None)
+    monkeypatch.setattr("document_vos.sam.sam.check_installation", lambda: None)
     weights = tmp_path / "local.pt"
     torch.save(
         {

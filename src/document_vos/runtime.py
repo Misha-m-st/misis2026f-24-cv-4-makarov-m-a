@@ -5,7 +5,7 @@ import shutil
 from dataclasses import asdict, dataclass, fields
 from pathlib import Path
 
-from .io import PipelineError
+from document_vos.io import PipelineError
 
 
 @dataclass(frozen=True)

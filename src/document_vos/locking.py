@@ -4,7 +4,7 @@ import os
 from contextlib import contextmanager
 from pathlib import Path
 
-from .io import PipelineError
+from document_vos.io import PipelineError
 
 
 @contextmanager

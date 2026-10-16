@@ -6,11 +6,11 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from document_vos.adapters import prepare
 from document_vos.cutie import local_weights
+from document_vos.cutie.training import training_config, validate_training_config
 from document_vos.data import load_manifest
+from document_vos.data.adapters import prepare
 from document_vos.io import PipelineError, read_json, sha256, write_json, write_jsonl
-from document_vos.training import training_config, validate_training_config
 
 
 def image(path, value=32):

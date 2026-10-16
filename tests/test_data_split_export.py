@@ -5,9 +5,9 @@ import pytest
 from PIL import Image
 
 from document_vos.data import load_manifest, save_manifest, validate_data
-from document_vos.export import export_training, validate_export
+from document_vos.data.export import export_training, validate_export
+from document_vos.data.split import assert_disjoint, components, split_manifest
 from document_vos.io import PipelineError, read_json
-from document_vos.split import assert_disjoint, components, split_manifest
 
 
 def test_split_reproducible_and_cross_dataset_connected(tmp_path, sequences):

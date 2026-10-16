@@ -8,12 +8,13 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from document_vos import data, validation_cache
-from document_vos.adapters import prepare
-from document_vos.cli import dispatch, parser
-from document_vos.export import export_training
+from document_vos import data
+from document_vos.data import validation_cache
+from document_vos.data.adapters import prepare
+from document_vos.data.export import export_training
+from document_vos.data.split import split_manifest
+from document_vos.diagnostics import dispatch, parser
 from document_vos.io import PipelineError, write_jsonl
-from document_vos.split import split_manifest
 
 
 def forbidden(*args, **kwargs):
@@ -58,7 +59,7 @@ def test_prepare_split_export_have_no_full_validation(tmp_path, sequences, monke
     split = tmp_path / "split"
     split_manifest(manifest, split)
     # Запись новых масок нужна; повторный validate_export после записи не нужен.
-    monkeypatch.setattr("document_vos.export.validate_export", forbidden)
+    monkeypatch.setattr("document_vos.data.export.validate_export", forbidden)
     assert export_training(split / "train.jsonl", split, tmp_path / "export")["frames"] > 0
 
 

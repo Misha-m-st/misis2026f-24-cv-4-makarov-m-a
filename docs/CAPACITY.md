@@ -3,9 +3,9 @@
 Из корня проекта, после экспорта train и установки CUDA PyTorch:
 
 ```bash
-uv run --locked python -m document_vos.capacity \
+uv run document-vos tools capacity \
   --weights weights/cutie-base-mega.pth \
-  --export data/training-v1 \
+  --export data/prepared/training-export \
   --output data/benchmarks/training-capacity-new \
   --workers 4
 ```

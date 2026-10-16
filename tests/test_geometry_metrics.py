@@ -2,9 +2,9 @@ import numpy as np
 import pytest
 
 from document_vos.evaluation import aggregate, temporal_curve
+from document_vos.evaluation.metrics import METRICS, boundary_band, decay, mask_metrics
 from document_vos.geometry import clip_polygon, quad_mask
 from document_vos.io import PipelineError
-from document_vos.metrics import METRICS, boundary_band, decay, mask_metrics
 
 
 def test_polygon_clipped_as_intersection():

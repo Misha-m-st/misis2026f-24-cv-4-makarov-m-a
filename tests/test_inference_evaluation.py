@@ -1,9 +1,9 @@
 import pytest
 
-from document_vos.comparison import compare
+from document_vos.cutie.inference import propagate
 from document_vos.data import save_manifest
 from document_vos.evaluation import evaluate
-from document_vos.inference import propagate
+from document_vos.evaluation.comparison import compare
 from document_vos.io import PipelineError, read_json, write_json
 
 

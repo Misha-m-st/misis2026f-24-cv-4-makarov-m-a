@@ -12,10 +12,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import pytest
 
-from document_vos.download import (
+from document_vos.data.download import (
     DATASETS,
     MARKER,
-    PROJECT_ROOT,
     DownloadError,
     dataset_archives,
     download_archive,
@@ -158,20 +157,19 @@ def test_rejects_unsafe_archive_paths(tmp_path, name):
 
 
 def test_plan_works_from_any_directory_and_writes_nothing(tmp_path):
-    script = PROJECT_ROOT / "scripts/download_datasets.py"
     result = subprocess.run(
-        [sys.executable, str(script), "--plan", "--datasets", "midv2020"],
+        [sys.executable, "-m", "document_vos", "download", "--plan", "--dataset", "midv2020"],
         cwd=tmp_path,
         text=True,
         capture_output=True,
         check=False,
     )
     assert result.returncode == 0, result.stderr
-    assert str(PROJECT_ROOT / "data/archives/midv2020-clips.tar") in result.stdout
+    assert str(tmp_path / "data/archives/midv2020-clips.tar") in result.stdout
     assert list(tmp_path.iterdir()) == []
     data_dir = tmp_path / "other-disk"
     result = subprocess.run(
-        [sys.executable, str(script), "--plan", "--data-dir", str(data_dir)],
+        [sys.executable, "-m", "document_vos", "download", "--plan", "--archives", str(data_dir)],
         cwd=tmp_path,
         text=True,
         capture_output=True,
@@ -228,12 +226,14 @@ def test_extension_plan_does_not_download(tmp_path):
     result = subprocess.run(
         [
             sys.executable,
-            str(PROJECT_ROOT / "scripts/download_datasets.py"),
+            "-m",
+            "document_vos",
+            "download",
             "--plan",
-            "--datasets",
+            "--dataset",
             "midv2019",
             "midvholo",
-            "--data-dir",
+            "--archives",
             str(tmp_path / "data"),
         ],
         text=True,
@@ -241,7 +241,9 @@ def test_extension_plan_does_not_download(tmp_path):
         check=False,
     )
     assert result.returncode == 0, result.stderr
-    assert "53.427 ГБ" in result.stdout
-    assert "raw/midv2019/01_alb_id" in result.stdout
-    assert "raw/midvholo/metadata" in result.stdout
+    plan = json.loads(result.stdout)
+    assert plan["download_bytes"] == 53427326141
+    assert len(plan["archives"]) == 53
+    assert plan["archives"][0]["dataset"] == "midv2019"
+    assert plan["archives"][-1]["path"].endswith("holo-metadata.tar")
     assert list(tmp_path.iterdir()) == []

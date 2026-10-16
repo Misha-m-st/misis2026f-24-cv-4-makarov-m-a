@@ -1,0 +1,202 @@
+{
+  "schema": "document-vos/samples-v1",
+  "release_status": "UNPUBLISHED",
+  "samples": [
+    {
+      "id": "smartdoc2015-01",
+      "dataset": "smartdoc2015",
+      "sequence": "smartdoc2015/background01/patent001",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/smartdoc2015-01.zip",
+      "bytes": 7244484,
+      "sha256": "a5af76507f997528102d7177408d9bff10a601801e6eb8ee7127876690bf5fc1",
+      "unpacked_bytes": 9182646,
+      "frames": 188,
+      "source_frame_bytes": 9126562,
+      "source": {
+        "url": "https://github.com/jchazalon/smartdoc15-ch1-dataset",
+        "attribution": "Burie, Chazalon, Coustaty, Eskenazi, Luqman, Mehri, Nayef, Ogier, Prum, Rusinol. ICDAR2015 Competition on Smartphone Document Capture and OCR (SmartDoc), 2015.",
+        "terms": "CC BY 4.0; original frames, first GT quad rasterized to binary mask"
+      }
+    },
+    {
+      "id": "smartdoc2015-02",
+      "dataset": "smartdoc2015",
+      "sequence": "smartdoc2015/background02/patent002",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/smartdoc2015-02.zip",
+      "bytes": 6804839,
+      "sha256": "7ca637e8d8b790a5de3775179f6558b4e4d57f995ddc42ff4517a6911feb2d07",
+      "unpacked_bytes": 8652520,
+      "frames": 167,
+      "source_frame_bytes": 8602030,
+      "source": {
+        "url": "https://github.com/jchazalon/smartdoc15-ch1-dataset",
+        "attribution": "Burie, Chazalon, Coustaty, Eskenazi, Luqman, Mehri, Nayef, Ogier, Prum, Rusinol. ICDAR2015 Competition on Smartphone Document Capture and OCR (SmartDoc), 2015.",
+        "terms": "CC BY 4.0; original frames, first GT quad rasterized to binary mask"
+      }
+    },
+    {
+      "id": "midv2020-01",
+      "dataset": "midv2020",
+      "sequence": "midv2020/rus_internalpassport/15",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midv2020-01.zip",
+      "bytes": 3671320,
+      "sha256": "a3d44598e9aa967cb920fd2a18ea4da6924da6f3411c1ed1704f5beb87c19bd8",
+      "unpacked_bytes": 4280511,
+      "frames": 48,
+      "source_frame_bytes": 4257453,
+      "source": {
+        "url": "ftp://smartengines.com/midv-2020/",
+        "attribution": "Bulatov et al. MIDV-2020: A Comprehensive Benchmark Dataset for Identity Document Analysis, 2021.",
+        "terms": "CC BY-SA 2.5 Generic, https://creativecommons.org/licenses/by-sa/2.5/. Face images: Generated Photos, https://generated.photos/.",
+        "terms_source": "https://docs.google.com/forms/d/e/1FAIpQLSdxB1gvdVlRcARUlMolTJzyqY93XBZHhwiBwkDx8BDyMIPWIg/viewform"
+      }
+    },
+    {
+      "id": "midv2020-02",
+      "dataset": "midv2020",
+      "sequence": "midv2020/rus_internalpassport/19",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midv2020-02.zip",
+      "bytes": 4552122,
+      "sha256": "f14d05cfee46404bcb53ab485c7f50c4d1fd838bc7e6b9c8dfcbcfaaebb9aed2",
+      "unpacked_bytes": 5303123,
+      "frames": 60,
+      "source_frame_bytes": 5277344,
+      "source": {
+        "url": "ftp://smartengines.com/midv-2020/",
+        "attribution": "Bulatov et al. MIDV-2020: A Comprehensive Benchmark Dataset for Identity Document Analysis, 2021.",
+        "terms": "CC BY-SA 2.5 Generic, https://creativecommons.org/licenses/by-sa/2.5/. Face images: Generated Photos, https://generated.photos/.",
+        "terms_source": "https://docs.google.com/forms/d/e/1FAIpQLSdxB1gvdVlRcARUlMolTJzyqY93XBZHhwiBwkDx8BDyMIPWIg/viewform"
+      }
+    },
+    {
+      "id": "midv500-01",
+      "dataset": "midv500",
+      "sequence": "midv500/43_tur_id/images/KA",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midv500-01.zip",
+      "bytes": 39050990,
+      "sha256": "22021a73edab99a1c5e60dec2709bc18602b92fa5c3db30fada8629ec3b9274c",
+      "unpacked_bytes": 39052697,
+      "frames": 30,
+      "source_frame_bytes": 39040875,
+      "source": {
+        "url": "ftp://smartengines.com/midv-500/",
+        "attribution": "Bulatov et al. MIDV-500: A Dataset for Identity Documents Analysis and Recognition on Mobile Devices in Video Stream, 2018.",
+        "terms": "Original document image notices apply; see origins in dataset. No project relicensing."
+      }
+    },
+    {
+      "id": "midv500-02",
+      "dataset": "midv500",
+      "sequence": "midv500/23_fin_drvlic/images/PA",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midv500-02.zip",
+      "bytes": 39979527,
+      "sha256": "a70cf5329b5680f4b1005dc0cb6f6d6d0b22079778ae83ccebe3c91def6b0af9",
+      "unpacked_bytes": 39972605,
+      "frames": 30,
+      "source_frame_bytes": 39961997,
+      "source": {
+        "url": "ftp://smartengines.com/midv-500/",
+        "attribution": "Bulatov et al. MIDV-500: A Dataset for Identity Documents Analysis and Recognition on Mobile Devices in Video Stream, 2018.",
+        "terms": "Original document image notices apply; see origins in dataset. No project relicensing."
+      }
+    },
+    {
+      "id": "midv2019-01",
+      "dataset": "midv2019",
+      "sequence": "midv2019/43_tur_id/images/DX",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midv2019-01.zip",
+      "bytes": 91543628,
+      "sha256": "2aa13eaa6ca042092b7286816fdbc2430e312a1df0684391c918924736346d55",
+      "unpacked_bytes": 91538331,
+      "frames": 30,
+      "source_frame_bytes": 91513642,
+      "source": {
+        "url": "ftp://smartengines.com/midv-500/extra/midv-2019/",
+        "attribution": "Bulatov et al. MIDV-2019: Challenges of the modern mobile-based document OCR, 2019.",
+        "terms": "Original MIDV-500 document image notices apply; no project relicensing."
+      }
+    },
+    {
+      "id": "midv2019-02",
+      "dataset": "midv2019",
+      "sequence": "midv2019/29_irn_drvlic/images/DX",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midv2019-02.zip",
+      "bytes": 94598016,
+      "sha256": "5197f28a532e19f4ad1a5bd8b18fb01a42507c507f22169bb04e5dd8a8c26ddc",
+      "unpacked_bytes": 94582356,
+      "frames": 30,
+      "source_frame_bytes": 94561943,
+      "source": {
+        "url": "ftp://smartengines.com/midv-500/extra/midv-2019/",
+        "attribution": "Bulatov et al. MIDV-2019: Challenges of the modern mobile-based document OCR, 2019.",
+        "terms": "Original MIDV-500 document image notices apply; no project relicensing."
+      }
+    },
+    {
+      "id": "midvholo-01",
+      "dataset": "midvholo",
+      "sequence": "midvholo/fraud/pseudo_holo_copy/passport/psp05_05_01",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midvholo-01.zip",
+      "bytes": 5395739,
+      "sha256": "f80f9e71fe18f1aade183ead5dd291985a52986df673aa103a0ebf12676e2d9f",
+      "unpacked_bytes": 5551123,
+      "frames": 37,
+      "source_frame_bytes": 5362588,
+      "source": {
+        "url": "https://github.com/SmartEngines/midv-holo",
+        "attribution": "Smart Engines, MIDV-Holo. Face images: Generated Photos, https://generated.photos/.",
+        "terms": "CC BY-SA 2.5 Generic, https://creativecommons.org/licenses/by-sa/2.5/."
+      }
+    },
+    {
+      "id": "midvholo-02",
+      "dataset": "midvholo",
+      "sequence": "midvholo/origins/passport/psp05_05_01",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/midvholo-02.zip",
+      "bytes": 5400815,
+      "sha256": "7b0fae92e7f0afb48c336ab53f25bc457c17f3701d4725c265430abe246c273e",
+      "unpacked_bytes": 5564540,
+      "frames": 40,
+      "source_frame_bytes": 5375477,
+      "source": {
+        "url": "https://github.com/SmartEngines/midv-holo",
+        "attribution": "Smart Engines, MIDV-Holo. Face images: Generated Photos, https://generated.photos/.",
+        "terms": "CC BY-SA 2.5 Generic, https://creativecommons.org/licenses/by-sa/2.5/."
+      }
+    },
+    {
+      "id": "dlc2021-01",
+      "dataset": "dlc2021",
+      "sequence": "dlc2021/svk_id/00.cg0002",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/dlc2021-01.zip",
+      "bytes": 1925449,
+      "sha256": "6e97789d4bc0fba2956f129ad31640153563df8d8daa8774aab97c4af3a7d4f4",
+      "unpacked_bytes": 2021992,
+      "frames": 53,
+      "source_frame_bytes": 2006850,
+      "source": {
+        "url": "ftp://smartengines.com/dlc-2021/",
+        "attribution": "Polevoy, Sigareva, Ershova, Arlazarov, Nikolaev, Ming, Luqman, Burie. Document Liveness Challenge Dataset (DLC-2021), J. Imaging 8(7):181, 2022. Face images: Generated Photos, https://generated.photos/.",
+        "terms": "CC BY-SA 2.5 Generic, https://creativecommons.org/licenses/by-sa/2.5/.",
+        "terms_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9323793/"
+      }
+    },
+    {
+      "id": "dlc2021-02",
+      "dataset": "dlc2021",
+      "sequence": "dlc2021/rus_internalpassport/03.cg0001",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/dlc2021-02.zip",
+      "bytes": 1975320,
+      "sha256": "dc964255abd1161a9616fe2049118a0773661425f8e870d97dfdd55b23ac00a2",
+      "unpacked_bytes": 2132520,
+      "frames": 53,
+      "source_frame_bytes": 2116918,
+      "source": {
+        "url": "ftp://smartengines.com/dlc-2021/",
+        "attribution": "Polevoy, Sigareva, Ershova, Arlazarov, Nikolaev, Ming, Luqman, Burie. Document Liveness Challenge Dataset (DLC-2021), J. Imaging 8(7):181, 2022. Face images: Generated Photos, https://generated.photos/.",
+        "terms": "CC BY-SA 2.5 Generic, https://creativecommons.org/licenses/by-sa/2.5/.",
+        "terms_source": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9323793/"
+      }
+    }
+  ]
+}

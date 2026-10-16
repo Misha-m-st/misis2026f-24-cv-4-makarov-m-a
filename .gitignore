@@ -6,7 +6,8 @@ __pycache__/
 .ruff_cache/
 .validation-cache.sqlite3*
 *.egg-info/
-data/
+/data/
+/tools/phone_testset/data/
 weights/
 results/
 artifacts/
@@ -21,3 +22,5 @@ dist/
 /*.odt
 /*.mp4
 .~lock.*#
+
+.cache/

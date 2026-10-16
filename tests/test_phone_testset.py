@@ -9,13 +9,13 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from document_vos.cli import dispatch, parser
+from document_vos.cutie.inference import infer
 from document_vos.data import Frame, Sequence, save_manifest
+from document_vos.data.input_folder import select_input_folder
+from document_vos.diagnostics import dispatch, parser
 from document_vos.evaluation import evaluate
-from document_vos.inference import infer
-from document_vos.input_folder import select_input_folder
 from document_vos.io import PipelineError, read_json, read_jsonl, sha256
-from tools.phone_testset.video import extract
+from document_vos.video import extract
 
 
 class Propagator:
@@ -85,7 +85,7 @@ def phone_set(tmp_path, videos):
     sequences = []
     for n, video in enumerate(videos):
         name = f"video-{n}"
-        frames, timing = extract(video, folder / "frames" / name, "ffmpeg", "ffprobe")
+        frames, timing = extract(video, folder / "frames" / name)
         masks = folder / "masks" / name
         masks.mkdir(parents=True)
         for i in [0, 10, 20]:
@@ -119,7 +119,7 @@ def phone_set(tmp_path, videos):
 
 
 def fake_cutie(monkeypatch):
-    import document_vos.inference as module
+    import document_vos.cutie.inference as module
 
     monkeypatch.setattr(module, "check_checkout", lambda p: p)
     monkeypatch.setattr(module, "local_weights", lambda p: p)
@@ -195,7 +195,7 @@ def test_pts_orientation_and_sparse_masks(tmp_path, videos, phone_set):
         check=True,
         capture_output=True,
     )
-    frames, meta = extract(rotated, tmp_path / "oriented", "ffmpeg", "ffprobe")
+    frames, meta = extract(rotated, tmp_path / "oriented")
     assert meta["oriented_size"] == [32, 64]
     with Image.open(rows[0]["frames"][0]["path"]) as im:
         original = np.asarray(im)
@@ -277,7 +277,7 @@ def test_empty_selection_never_loads_cutie_and_bad_initial_excluded(
     def forbidden(*args):
         pytest.fail("Cutie must not be checked/loaded for an empty selection")
 
-    monkeypatch.setattr("document_vos.inference.check_checkout", forbidden)
+    monkeypatch.setattr("document_vos.cutie.inference.check_checkout", forbidden)
     result = infer(
         None,
         tmp_path / "empty",
@@ -300,7 +300,7 @@ def test_cli_input_resolution_and_scope(tmp_path, monkeypatch):
         seen.update(manifest=args[0], scope=args[5], **kwargs)
         return {}
 
-    monkeypatch.setattr("document_vos.inference.infer", capture)
+    monkeypatch.setattr("document_vos.cutie.inference.infer", capture)
     cfg = tmp_path / "config.yaml"
     cfg.write_text(
         "manifest: old.jsonl\ncutie_root: .\nweights: weights\noutput: result\ninput_dir: data/phone\n"
@@ -323,7 +323,7 @@ def test_cli_input_resolution_and_scope(tmp_path, monkeypatch):
 
 @pytest.mark.parametrize("change", ["review", "mask", "frame"])
 def test_compatibility_rejects_changed_folder_inputs(tmp_path, phone_set, monkeypatch, change):
-    from document_vos.comparison import compatible
+    from document_vos.evaluation.comparison import compatible
 
     run_folder(tmp_path, phone_set, tmp_path / "baseline", monkeypatch)
     evaluate(tmp_path / "baseline", tmp_path / "baseline-eval", workers=1)
@@ -349,11 +349,33 @@ def test_compatibility_rejects_changed_folder_inputs(tmp_path, phone_set, monkey
 
 @pytest.mark.parametrize("pts", [[None, 1], [0, 0], [1, 0]])
 def test_missing_or_nonmonotonic_timestamps_never_fall_back_to_fps(tmp_path, monkeypatch, pts):
-    probe = {
-        "streams": [{"time_base": "1/1000", "width": 64, "height": 32}],
-        "frames": [{"pts": p} for p in pts],
-    }
-    monkeypatch.setattr("tools.phone_testset.video.command", lambda argv: json.dumps(probe))
-    with pytest.raises(ValueError, match="timestamps"):
-        extract(tmp_path / "video", tmp_path / "frames", "ffmpeg", "ffprobe")
-    assert not (tmp_path / "frames").exists()
+    from fractions import Fraction
+    from types import SimpleNamespace
+
+    class Container:
+        streams = SimpleNamespace(video=[object()])
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def decode(self, stream):
+            return iter(
+                [
+                    SimpleNamespace(
+                        pts=p,
+                        time_base=Fraction(1, 1000),
+                        rotation=0,
+                        width=64,
+                        height=32,
+                        to_ndarray=lambda **kw: np.zeros((32, 64, 3), np.uint8),
+                    )
+                    for p in pts
+                ]
+            )
+
+    monkeypatch.setattr("document_vos.video.av.open", lambda *a, **kw: Container())
+    with pytest.raises(ValueError, match="PTS|timestamps"):
+        extract(tmp_path / "video", tmp_path / "frames")

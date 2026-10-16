@@ -2,9 +2,9 @@ import os
 
 import pytest
 
-import document_vos.export as module
+import document_vos.data.export as module
+from document_vos.data.split import split_manifest
 from document_vos.io import PipelineError
-from document_vos.split import split_manifest
 
 
 def test_export_cache_reuses_only_unchanged_verified_files(tmp_path, manifest, monkeypatch):

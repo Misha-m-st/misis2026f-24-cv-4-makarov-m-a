@@ -11,9 +11,9 @@ from document_vos.cutie import (
     disable_downloads_and_require_full_weights,
     inference_config,
 )
-from document_vos.export import export_training
-from document_vos.split import split_manifest
-from document_vos.training import train
+from document_vos.cutie.training import train
+from document_vos.data.export import export_training
+from document_vos.data.split import split_manifest
 
 
 @pytest.fixture

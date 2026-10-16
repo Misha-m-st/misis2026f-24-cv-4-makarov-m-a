@@ -1,7 +1,0 @@
-# CPU budget while a separate CUDA inference process is active.
-runtime:
-  workers: 2
-  io_threads: 2
-  queue_size: 4
-  threads_per_worker: 1
-  device: cpu

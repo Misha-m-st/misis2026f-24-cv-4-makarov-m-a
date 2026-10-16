@@ -1,0 +1,189 @@
+exp_id: documents
+debug: false
+cudnn_benchmark: false
+weights: ${paths.weights}/cutie-base-mega.pth
+checkpoint: null
+seed: 42
+num_workers: 4
+log_text_interval: 25
+log_image_interval: 1500
+save_weights_interval: 1000
+save_checkpoint_interval: 1000
+pre_training:
+  name: pre_training
+  enabled: false
+  batch_size: 16
+  amp: false
+  num_iterations: 80000
+  learning_rate: 0.0001
+  lr_schedule: constant
+  point_supervision: true
+  train_num_points: 8192
+  oversample_ratio: 3.0
+  importance_sample_ratio: 0.75
+  clip_grad_norm: 3.0
+  weight_decay: 0.001
+  embed_weight_decay: 0.0
+  backbone_lr_ratio: 0.1
+  num_ref_frames: 2
+  seq_length: 3
+  num_objects: 1
+  deep_update_prob: 0.2
+  crop_size:
+  - 384
+  - 384
+  frequent_save_in_last: 0
+  frequent_save_interval: 1000
+main_training:
+  name: main_training
+  enabled: true
+  batch_size: 2
+  amp: true
+  num_iterations: 30000
+  learning_rate: 1.0e-05
+  lr_schedule: constant
+  lr_schedule_steps: []
+  lr_schedule_gamma: 0.1
+  point_supervision: true
+  train_num_points: 12544
+  oversample_ratio: 3.0
+  importance_sample_ratio: 0.75
+  clip_grad_norm: 3.0
+  weight_decay: 0.001
+  embed_weight_decay: 0.0
+  backbone_lr_ratio: 0.1
+  num_ref_frames: 3
+  seq_length: 8
+  num_objects: 1
+  deep_update_prob: 0.2
+  crop_size:
+  - 480
+  - 480
+  merge_probability: 0.0
+  max_skip_schedule:
+  - 5
+  - 10
+  - 15
+  - 5
+  max_skip_schedule_fraction:
+  - 0.0
+  - 0.1
+  - 0.3
+  - 0.8
+  frequent_save_in_last: 0
+  frequent_save_interval: 1000
+data:
+  image_datasets:
+    base: ${paths.prepared}/training-export
+  pre_training:
+    datasets: []
+  vos_datasets:
+    base: ${paths.prepared}/training-export
+    DOCUMENTS:
+      image_directory: images
+      mask_directory: masks
+      frame_interval: 1
+      subset: null
+      empty_masks: null
+      multiplier: 1
+  main_training:
+    datasets:
+    - DOCUMENTS
+    num_iterations: 30000
+    lr_schedule_steps: []
+model:
+  pixel_mean:
+  - 0.485
+  - 0.456
+  - 0.406
+  pixel_std:
+  - 0.229
+  - 0.224
+  - 0.225
+  pixel_dim: 256
+  key_dim: 64
+  value_dim: 256
+  sensory_dim: 256
+  embed_dim: 256
+  pixel_encoder:
+    type: resnet50
+    ms_dims:
+    - 1024
+    - 512
+    - 256
+  mask_encoder:
+    type: resnet18
+    final_dim: 256
+  pixel_pe_scale: 32
+  pixel_pe_temperature: 128
+  object_transformer:
+    embed_dim: 256
+    ff_dim: 2048
+    num_heads: 8
+    num_blocks: 3
+    num_queries: 16
+    read_from_pixel:
+      input_norm: false
+      input_add_pe: false
+      add_pe_to_qkv:
+      - true
+      - true
+      - false
+    read_from_past:
+      add_pe_to_qkv:
+      - true
+      - true
+      - false
+    read_from_memory:
+      add_pe_to_qkv:
+      - true
+      - true
+      - false
+    read_from_query:
+      add_pe_to_qkv:
+      - true
+      - true
+      - false
+      output_norm: false
+    query_self_attention:
+      add_pe_to_qkv:
+      - true
+      - true
+      - false
+    pixel_self_attention:
+      add_pe_to_qkv:
+      - true
+      - true
+      - false
+  object_summarizer:
+    embed_dim: 256
+    num_summaries: 16
+    add_pe: true
+  aux_loss:
+    sensory:
+      enabled: true
+      weight: 0.01
+    query:
+      enabled: true
+      weight: 0.01
+  mask_decoder:
+    up_dims:
+    - 256
+    - 128
+    - 128
+document_vos_runtime:
+  workers: 8
+  io_threads: 4
+  queue_size: 8
+  threads_per_worker: 1
+  dataloader_workers: 4
+  prefetch_factor: 1
+  persistent_workers: true
+  pin_memory: true
+  device: cuda
+  min_free_bytes: 10000000000
+hydra:
+  run:
+    dir: ${paths.results}/checkpoints/official
+  job:
+    chdir: false

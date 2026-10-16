@@ -13,7 +13,7 @@ from pathlib import Path
 
 from omegaconf import OmegaConf
 
-from .cutie import (
+from document_vos.cutie import (
     CUTIE_REVISION,
     activate_checkout,
     check_checkout,
@@ -21,10 +21,10 @@ from .cutie import (
     disable_downloads_and_require_full_weights,
     local_weights,
 )
-from .io import PipelineError, new_directory, read_json, sha256, versions, write_json
-from .parallel import check_workers
-from .split import verify_training_split
-from .training import training_config, validate_training_config
+from document_vos.cutie.training import training_config, validate_training_config
+from document_vos.data.split import verify_training_split
+from document_vos.io import PipelineError, new_directory, read_json, sha256, versions, write_json
+from document_vos.parallel import check_workers
 
 
 def candidates() -> list[dict]:
@@ -148,9 +148,9 @@ def worker(case: Path, warmup: int, steps: int) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--cutie", type=Path, default=Path("external/Cutie"))
+    p.add_argument("--cutie", type=Path, default=Path(".cache/Cutie"))
     p.add_argument("--weights", type=Path, default=Path("weights/cutie-base-mega.pth"))
-    p.add_argument("--export", type=Path, default=Path("data/training-v1"))
+    p.add_argument("--export", type=Path, default=Path("data/prepared/training-export"))
     p.add_argument("--output", type=Path)
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--warmup", type=int, default=5)

@@ -8,7 +8,7 @@ from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from time import monotonic
 from typing import Callable, Iterable, Iterator, TypeVar
 
-from .io import PipelineError
+from document_vos.io import PipelineError
 
 DEFAULT_WORKERS = 4
 T = TypeVar("T")
@@ -51,7 +51,7 @@ def ordered_map(
     функция выполняется в текущем процессе; результаты всегда в порядке входа.
     """
     check_workers(workers)
-    from .runtime import current_runtime
+    from document_vos.runtime import current_runtime
 
     runtime = current_runtime()
     queue_size = min(workers * 2, runtime.queue_size) if queue_size is None else queue_size

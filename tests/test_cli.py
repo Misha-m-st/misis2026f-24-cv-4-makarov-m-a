@@ -1,13 +1,13 @@
 import subprocess
 import sys
 
-from document_vos.cli import parser
+from document_vos.diagnostics import parser
 
 
 def test_cli_split_validate_export_report(tmp_path, manifest):
     def command(*args):
         result = subprocess.run(
-            [sys.executable, "-m", "document_vos", *map(str, args)],
+            [sys.executable, "-m", "document_vos", "tools", *map(str, args)],
             text=True,
             capture_output=True,
             check=False,
@@ -31,7 +31,10 @@ def test_cli_split_validate_export_report(tmp_path, manifest):
     )
     assert (tmp_path / "export/export.json").is_file()
     bad = subprocess.run(
-        [sys.executable, "-m", "document_vos", "train"], text=True, capture_output=True, check=False
+        [sys.executable, "-m", "document_vos", "tools", "train"],
+        text=True,
+        capture_output=True,
+        check=False,
     )
     assert bad.returncode == 2 and "Необходимо" in bad.stderr
 

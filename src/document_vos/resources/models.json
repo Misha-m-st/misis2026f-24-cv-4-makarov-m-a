@@ -1,0 +1,18 @@
+{
+  "schema": "document-vos/models-v1",
+  "release_status": "UNPUBLISHED",
+  "models": {
+    "baseline": {
+      "filename": "cutie-base-mega.pth",
+      "url": "https://github.com/hkchengrex/Cutie/releases/download/v1.0/cutie-base-mega.pth",
+      "bytes": 140443788,
+      "sha256": "9c05402ee36d3a356fb72715d263ba7e1ea06ad3bada48c1306491792da43023"
+    },
+    "finetuned": {
+      "filename": "cutie-document.pth",
+      "url": "https://github.com/Misha-m-st/misis2026f-24-cv-4-makarov-m-a/releases/download/document-vos-0.1/cutie-document.pth",
+      "bytes": 140429018,
+      "sha256": "7c5f83b1b2388ae23d1c9c588d3fd2155c657fe0bdf8b195ed2438bc99290d0a"
+    }
+  }
+}

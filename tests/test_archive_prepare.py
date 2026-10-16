@@ -8,8 +8,8 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from document_vos.archive_prepare import RECEIPT, normalize_archive
-from document_vos.download import Dataset
+from document_vos.data.archive_prepare import RECEIPT, normalize_archive
+from document_vos.data.download import Dataset
 from document_vos.io import PipelineError, read_json
 from document_vos.runtime import Runtime
 
@@ -108,7 +108,7 @@ def test_traversal_and_conversion_collision_fail_closed(tmp_path, names):
 
 
 def test_resume_after_worker_failure(tmp_path, monkeypatch):
-    import document_vos.archive_prepare as module
+    import document_vos.data.archive_prepare as module
 
     archive, spec, _ = archive_fixture(tmp_path)
     original = module._materialize
