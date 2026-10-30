@@ -16,7 +16,7 @@ def parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(description="Cutie для видео документов")
     p.add_argument("--config", type=Path)
     sub = p.add_subparsers(dest="command", required=True)
-    for name in ["setup", "download", "prepare", "train", "infer", "reproduce"]:
+    for name in ["setup", "download", "prepare", "train", "infer", "reproduce", "benchmark"]:
         s = sub.add_parser(name)
         s.add_argument("--config", type=Path, default=argparse.SUPPRESS)
         if name in {"train", "infer", "prepare", "reproduce"}:
@@ -27,6 +27,10 @@ def parser() -> argparse.ArgumentParser:
             s.add_argument("--device", choices=["cuda", "cpu", "auto"])
         if name in {"setup", "prepare"}:
             s.add_argument("--sam", action="store_true")
+        if name == "setup":
+            s.add_argument(
+                "--model", choices=["baseline", "finetuned", "efficienttam", "livos", "sam31"]
+            )
         if name in {"setup", "download"}:
             s.add_argument("--catalog", type=Path)
         if name in {"download", "infer"}:
@@ -54,7 +58,9 @@ def parser() -> argparse.ArgumentParser:
             s.add_argument("--iterations", type=int)
             s.add_argument("--learning-rate", type=float)
         if name == "infer":
-            s.add_argument("--model", choices=["baseline", "finetuned"])
+            s.add_argument(
+                "--model", choices=["baseline", "finetuned", "efficienttam", "livos", "sam31"]
+            )
             s.add_argument("--input-dir", type=Path)
             s.add_argument("--manifest", type=Path)
             s.add_argument("--split-dir", type=Path)
@@ -65,6 +71,16 @@ def parser() -> argparse.ArgumentParser:
             s.add_argument(
                 "--resume", type=Path, help="Проверить входы и продолжить завершённые этапы"
             )
+        if name == "benchmark":
+            s.add_argument("--resolution", choices=["cutie", "native"])
+            s.add_argument(
+                "--models",
+                nargs="+",
+                choices=["baseline", "finetuned", "efficienttam", "livos", "sam31"],
+            )
+            s.add_argument("--resume", type=Path)
+            s.add_argument("--manifest", type=Path)
+            s.add_argument("--split-dir", type=Path)
     t = sub.add_parser("tools", add_help=False, help="Диагностики, проверка данных, сборка Release")
     t.add_argument("arguments", nargs=argparse.REMAINDER)
     return p
@@ -72,6 +88,8 @@ def parser() -> argparse.ArgumentParser:
 
 def dispatch(args: argparse.Namespace) -> dict:
     cfg = load(args.config)
+    if args.command == "benchmark" and args.resolution is not None:
+        cfg["benchmark"]["resolution"] = args.resolution
 
     def option(name, default=None):
         return getattr(args, name, default)
@@ -91,6 +109,17 @@ def dispatch(args: argparse.Namespace) -> dict:
         cfg["runtime"]["dataloader_workers"] = args.workers
     if option("model"):
         cfg["model"] = args.model
+    if args.command == "infer":
+        model_options = cfg["benchmark"]["models"][cfg["model"]]
+        if cfg["model"] in {"baseline", "finetuned"}:
+            cfg["inference"].update(model_options["inference"])
+        else:
+            if option("mem_every") is not None:
+                raise PipelineError("--mem-every поддерживается только Cutie")
+            if option("max_internal_size") is not None:
+                if cfg["model"] != "livos":
+                    raise PipelineError("--max-internal-size поддерживается LiVOS и Cutie")
+                model_options["max_internal_size"] = args.max_internal_size
     if args.command == "infer" and option("dataset") and not args.sample:
         raise PipelineError("infer --dataset требует --sample")
     if option("dataset"):
@@ -133,7 +162,9 @@ def dispatch(args: argparse.Namespace) -> dict:
     if name == "setup":
         from document_vos.setup import setup
 
-        return setup(cfg, sam=args.sam, catalog=cli_path("catalog"))
+        if args.model and args.sam:
+            raise PipelineError("setup --model несовместим с --sam")
+        return setup(cfg, sam=args.sam, catalog=cli_path("catalog"), model=args.model)
     if name == "download":
         if args.sample:
             from document_vos.data.samples import catalog, download
@@ -195,8 +226,26 @@ def dispatch(args: argparse.Namespace) -> dict:
             )
         if args.input_dir and args.manifest:
             raise PipelineError("--input-dir и --manifest несовместимы")
+        if cfg["model"] not in {"baseline", "finetuned"}:
+            from document_vos.benchmark import inference as model_inference
+
+            return model_inference(
+                cfg,
+                cfg["model"],
+                sample=args.sample,
+                input_dir=cli_path("input_dir"),
+                manifest=cli_path("manifest"),
+                split_dir=cli_path("split_dir"),
+                scope=args.scope,
+                weights=cli_path("weights"),
+                output=cli_path("output"),
+                seed=args.seed if args.seed is not None else cfg["benchmark"]["seed"],
+            )
         from document_vos.workflows import inference
 
+        weights = cli_path("weights")
+        if weights is None and cfg["benchmark"]["models"][cfg["model"]]["weights"]:
+            weights = Path(cfg["benchmark"]["models"][cfg["model"]]["weights"])
         return inference(
             cfg,
             sample=args.sample,
@@ -204,7 +253,7 @@ def dispatch(args: argparse.Namespace) -> dict:
             manifest=cli_path("manifest"),
             split_dir=cli_path("split_dir"),
             scope=args.scope,
-            weights=cli_path("weights"),
+            weights=weights,
             output=cli_path("output"),
             seed=args.seed if args.seed is not None else cfg["preparation"]["seed"],
         )
@@ -223,6 +272,16 @@ def dispatch(args: argparse.Namespace) -> dict:
         from document_vos.workflows import reproduce
 
         return reproduce(cfg, output=cli_path("output"), resume=cli_path("resume"))
+    if name == "benchmark":
+        from document_vos.benchmark import benchmark
+
+        return benchmark(
+            cfg,
+            models=args.models,
+            resume=cli_path("resume"),
+            manifest=cli_path("manifest"),
+            split_dir=cli_path("split_dir"),
+        )
     raise PipelineError(f"Неизвестная команда: {name}")
 
 

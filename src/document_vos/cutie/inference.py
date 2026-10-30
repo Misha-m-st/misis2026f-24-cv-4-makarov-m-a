@@ -113,6 +113,10 @@ def propagate(
     selection: dict | None = None,
 ) -> dict:
     """Движок с тестируемым контрактом; CLI всегда использует настоящий CutiePredictor."""
+    from document_vos.runtime import configure, current_runtime, runtime_snapshot
+    from document_vos.timing import protocol, speed_compatibility
+
+    configure(current_runtime())
     sequences = load_manifest(manifest) if sequences is None else sequences
     validate_data(sequences)
     output = new_directory(output)
@@ -122,9 +126,11 @@ def propagate(
         write_json(output / "selection.json", selection)
         metadata = {**metadata, "selection": selection}
     assets = snapshot_inputs(sequences)
+    metadata = {**metadata, "cpu_runtime": runtime_snapshot()}
     initializations = []
     predictions = []
     frame_count, model_seconds = 0, 0.0
+    predictor.sync()
     full_start = perf_counter()
     try:
         for seq in sequences:
@@ -155,6 +161,55 @@ def propagate(
 
             def predict_frames():
                 nonlocal frame_count, model_seconds
+                if hasattr(predictor, "iter_sequence") or hasattr(predictor, "predict_sequence"):
+                    source_frames = seq.frames[index:]
+                    sequence_api = (
+                        getattr(predictor, "iter_sequence", None) or predictor.predict_sequence
+                    )
+                    masks = sequence_api(
+                        source_frames, initial, output / ".model-cache" / seq.export_id
+                    )
+                    count = 0
+                    from contextlib import closing, nullcontext
+
+                    cleanup = closing(masks) if hasattr(masks, "close") else nullcontext(masks)
+                    with cleanup:
+                        for offset, pred in enumerate(masks):
+                            if offset >= len(source_frames):
+                                raise PipelineError(f"{seq.key}: модель вернула лишние маски")
+                            count += 1
+                            frame = source_frames[offset]
+                            i = index + offset
+                            with Image.open(frame.path) as source_image:
+                                shape = (source_image.height, source_image.width)
+                            pred = np.asarray(pred, dtype=np.uint8)
+                            if pred.shape != shape or not ((pred == 0) | (pred == 1)).all():
+                                raise PipelineError(
+                                    f"{seq.key}/{frame.id}: неверный размер/значения предсказания"
+                                )
+                            path = directory / f"{i:06d}.png"
+                            from document_vos.runtime import require_free_space
+
+                            require_free_space(output, (pred.size + 65536) * runtime.queue_size)
+                            frame_count += 1
+                            yield (
+                                pred.copy(),
+                                path,
+                                {
+                                    "video": seq.key,
+                                    "frame": frame.id,
+                                    "index": i,
+                                    "path": str(path.relative_to(output)),
+                                    "initialization": i == index,
+                                },
+                            )
+                    predictor.sync()
+                    if count != len(source_frames):
+                        raise PipelineError(
+                            f"{seq.key}: модель вернула {count} масок для {len(source_frames)} кадров"
+                        )
+                    model_seconds += predictor.last_model_seconds
+                    return
                 # A reader and the writer share the configured I/O budget.
                 readers = max(1, runtime.io_threads // 2)
                 for i, image in enumerate(
@@ -194,11 +249,14 @@ def propagate(
                     )
 
             writers = max(1, runtime.io_threads - max(1, runtime.io_threads // 2))
-            predictions.extend(
-                ordered_map(
-                    _save_prediction, predict_frames(), writers, threads=runtime.io_threads > 1
+            from contextlib import closing
+
+            with closing(predict_frames()) as pending_masks:
+                predictions.extend(
+                    ordered_map(
+                        _save_prediction, pending_masks, writers, threads=runtime.io_threads > 1
+                    )
                 )
-            )
 
         predictor.sync()
         full_seconds = perf_counter() - full_start
@@ -213,10 +271,18 @@ def propagate(
             "seed": metadata["seed"],
             "scope": metadata["scope"],
             "split_sha256": metadata.get("split_sha256"),
-            "cutie_revision": metadata["cutie_revision"],
+            "cutie_revision": metadata.get("cutie_revision"),
+            "backend": metadata.get("backend", "official-cutie"),
+            "backend_revision": metadata.get("backend_revision", metadata.get("cutie_revision")),
             "device": metadata["device"],
             "versions": metadata["versions"],
         }
+        if "benchmark_protocol_plan" in metadata:
+            from document_vos.timing import seal_benchmark_protocol
+
+            metadata["benchmark_protocol"] = seal_benchmark_protocol(
+                metadata.pop("benchmark_protocol_plan"), metadata
+            )
         result = {
             **metadata,
             "status": "COMPLETE",
@@ -225,18 +291,24 @@ def propagate(
             "inputs": assets,
             "predictions_sha256": sha256(output / "predictions.jsonl"),
             "timing": {
+                **protocol(metadata.get("backend", "official-cutie")),
                 "model_calls": frame_count,
                 "propagated_frames": frame_count - len(sequences),
                 "model_seconds": model_seconds,
                 "full_seconds": full_seconds,
                 "model_fps": frame_count / model_seconds,
                 "full_fps": frame_count / full_seconds,
-                "definition": "model: InferenceCore.step with CUDA sync; full: load/convert/transfer/step/save",
+                "definition": protocol(metadata.get("backend", "official-cutie"))["model_boundary"]
+                + "; full: "
+                + protocol(metadata.get("backend", "official-cutie"))["full_boundary"],
                 "includes_initialization": True,
                 "warmup_excluded": False,
             },
             "vram": predictor.memory_stats(),
         }
+        result["speed_compatibility"] = speed_compatibility(
+            {metadata.get("model", metadata.get("backend", "official-cutie")): result}
+        )
         write_json(output / "run.json", result)
         return {
             "status": "COMPLETE",
@@ -264,6 +336,9 @@ def infer(
     *,
     input_dir: Path | None = None,
 ) -> dict:
+    from document_vos.runtime import configure, current_runtime
+
+    configure(current_runtime())
     if output.exists():
         raise PipelineError(f"Каталог уже существует: {output}. Выберите новую версию результата.")
     selection, sequences = None, None

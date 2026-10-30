@@ -20,6 +20,7 @@ from document_vos.io import (
     write_json,
 )
 from document_vos.parallel import DEFAULT_WORKERS, Progress, check_workers, ordered_map
+from document_vos.timing import speed_compatibility
 
 
 def means(rows: list[dict], fields=METRICS) -> dict:
@@ -236,6 +237,9 @@ def evaluate(
         "run_sha256": sha256(run_dir / "run.json"),
         "run_dir": str(run_dir.resolve()),
         "run": run,
+        "speed_compatibility": speed_compatibility(
+            {run.get("model", run.get("backend", "official-cutie")): run}
+        ),
         "metric_protocol": METRIC_PROTOCOL,
         "selection": {
             "datasets": sorted({s.dataset for s in sequences}),

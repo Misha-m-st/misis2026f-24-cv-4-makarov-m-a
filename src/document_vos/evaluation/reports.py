@@ -28,6 +28,12 @@ def fmt(value: float | None) -> str:
 
 def render_report(data: dict, output: Path) -> None:
     comparison = data.get("kind") == "comparison"
+    run_info = data.get("run", {})
+    model_name = run_info.get("model") or (
+        "Cutie"
+        if run_info.get("backend", "official-cutie") == "official-cutie"
+        else run_info["backend"]
+    )
     csv_file(output / "frames.csv", data["frames"])
     csv_file(output / "videos.csv", data["videos"])
     per_video = defaultdict(list)
@@ -93,7 +99,7 @@ def render_report(data: dict, output: Path) -> None:
         else "выбранного validation-подмножества"
     )
     lines = [
-        "# " + ("Парное сравнение Cutie" if comparison else "Оценка Cutie"),
+        "# " + ("Парное сравнение Cutie" if comparison else f"Оценка {model_name}"),
         "",
         f"Результат {scope}. Датасеты: {', '.join(selected['datasets'])}.",
         *(
@@ -152,6 +158,28 @@ def render_report(data: dict, output: Path) -> None:
         ]
     )
     if comparison:
+        speed = data.get("speed_compatibility", {"status": "INCOMPATIBLE", "participants": {}})
+        csv_file(
+            output / "speed-compatibility.csv",
+            [
+                {
+                    "model": label,
+                    "status": speed["participants"].get(label, {}).get("status", "INCOMPATIBLE"),
+                    "reasons": "; ".join(
+                        speed["participants"]
+                        .get(label, {})
+                        .get("reasons", ["missing speed evidence"])
+                    ),
+                }
+                for label in ["baseline", "finetuned"]
+            ],
+        )
+        lines.extend(
+            [
+                "",
+                f"Совместимость скорости: {speed['status']}. Несовместимые FPS не используются для сравнительных выводов; совместимость качества проверяется отдельно.",
+            ]
+        )
         for label in ["baseline", "finetuned"]:
             values = data[label]["summary"]["primary_equal_datasets"]
             lines.extend(
@@ -160,12 +188,30 @@ def render_report(data: dict, output: Path) -> None:
     else:
         run = data["run"]
         timing = run["timing"]
+        from document_vos.timing import speed_compatibility
+
+        speed = speed_compatibility({model_name: run})
+        csv_file(
+            output / "timing.csv",
+            [
+                {
+                    **timing,
+                    "speed_compatibility": speed["status"],
+                    "speed_incompatibility_reasons": "; ".join(
+                        speed["participants"][model_name]["reasons"]
+                    ),
+                }
+            ],
+        )
         lines.extend(
             [
                 "",
-                f"FPS модели: {fmt(timing['model_fps'])}; полного прохода: {fmt(timing['full_fps'])}. Инициализация включена, отдельного warmup нет. CUDA синхронизируется вокруг model step; загрузка checkpoint и проверка хешей входов не входят в FPS.",
+                f"Измеренные FPS модели: {fmt(timing['model_fps'])}; полного прохода: {fmt(timing['full_fps'])}. Совместимость скорости: {speed['status']}. Несовместимые FPS не используются для сравнительных выводов; метрики качества сохраняют силу.",
                 "",
-                f"VRAM: {run['vram']}. Cutie: `{run['cutie_revision']}`. Seed: {run['seed']}.",
+                f"Таймер: {timing.get('protocol_version', 'UNKNOWN')}; границы: {timing.get('definition', 'UNKNOWN')}. Инициализация включена, дополнительного warmup нет.",
+                "",
+                f"VRAM: {run['vram']}. Модель: `{model_name}`; backend revision: "
+                f"`{run.get('backend_revision', run.get('cutie_revision'))}`. Seed: {run['seed']}.",
                 "",
                 f"SHA-256 весов: `{run['weights_sha256']}`; манифеста: `{run['signature']['manifest_sha256']}`.",
             ]

@@ -18,12 +18,12 @@ def _probe(task):
     pid = os.getpid()
     (directory / str(pid)).touch()
     deadline = monotonic() + 15
-    # Все четыре процесса действительно одновременно приступили к работе.
-    while len(list(directory.iterdir())) < 4:
+    # Все шесть процессов действительно одновременно приступили к работе.
+    while len(list(directory.iterdir())) < 6:
         if monotonic() > deadline:
-            raise RuntimeError("Не запустились четыре рабочих процесса")
+            raise RuntimeError("Не запустились шесть рабочих процессов")
         sleep(0.01)
-    sleep((3 - index) * 0.02)
+    sleep((5 - index) * 0.02)
     return index, pid, os.environ.get("OPENBLAS_NUM_THREADS")
 
 
@@ -45,12 +45,12 @@ def test_one_worker_runs_in_parent():
     ]
 
 
-def test_default_four_processes_and_order(tmp_path):
+def test_default_six_processes_and_order(tmp_path):
     results = list(
-        parallel.ordered_map(_probe, [(i, tmp_path) for i in range(4)], parallel.DEFAULT_WORKERS)
+        parallel.ordered_map(_probe, [(i, tmp_path) for i in range(6)], parallel.DEFAULT_WORKERS)
     )
-    assert [row[0] for row in results] == [0, 1, 2, 3]
-    assert len({row[1] for row in results}) == 4
+    assert [row[0] for row in results] == [0, 1, 2, 3, 4, 5]
+    assert len({row[1] for row in results}) == 6
     assert all(row[1] != os.getpid() and row[2] == "1" for row in results)
 
 

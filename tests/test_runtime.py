@@ -4,7 +4,7 @@ import types
 import pytest
 
 from document_vos.io import PipelineError
-from document_vos.runtime import Runtime, install_loader_options
+from document_vos.runtime import Runtime, initialize_loader_worker, install_loader_options
 
 
 @pytest.mark.parametrize(
@@ -42,6 +42,7 @@ def test_loader_settings_are_explicit():
         "pin_memory": True,
         "persistent_workers": True,
         "multiprocessing_context": "spawn",
+        "worker_init_fn": initialize_loader_worker,
     }
 
 

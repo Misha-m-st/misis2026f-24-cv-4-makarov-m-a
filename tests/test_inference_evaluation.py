@@ -65,6 +65,29 @@ def test_gt_once_reset_missing_gt_and_late_initialization(tmp_path, sequences):
     assert (tmp_path / "evaluation/temporal.png").stat().st_size > 1000
 
 
+def test_sequence_backend_masks_are_ordered_and_checked(tmp_path, manifest):
+    import numpy as np
+
+    class SequencePredictor(SpyPredictor):
+        def predict_sequence(self, frames, initial_mask, cache_dir):
+            self.calls.append((self.resets, len(frames), initial_mask.copy()))
+            return [initial_mask.copy() for _ in frames]
+
+    predictor = SequencePredictor()
+    propagate(manifest, tmp_path / "sequence-run", predictor, metadata())
+    result = read_json(tmp_path / "sequence-run/run.json")
+    assert result["status"] == "COMPLETE"
+    assert len(list((tmp_path / "sequence-run/predictions").rglob("*.png"))) == 24
+    assert len(predictor.calls) == 6
+
+    class ShortPredictor(SequencePredictor):
+        def predict_sequence(self, frames, initial_mask, cache_dir):
+            return [np.zeros_like(initial_mask)]
+
+    with pytest.raises(PipelineError, match="вернула"):
+        propagate(manifest, tmp_path / "short-run", ShortPredictor(), metadata())
+
+
 def test_missing_prediction_fails_even_without_gt(tmp_path, manifest):
     propagate(manifest, tmp_path / "run", SpyPredictor(), metadata())
     next((tmp_path / "run/predictions").rglob("*.png")).unlink()

@@ -1,10 +1,15 @@
 """Интеграция зафиксированного официального Cutie без скачивания весов."""
 
+from __future__ import annotations
+
 import subprocess
 import sys
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-import numpy as np
+if TYPE_CHECKING:
+    import numpy as np
+
 from hydra import compose, initialize_config_dir
 from omegaconf import OmegaConf
 
@@ -44,7 +49,8 @@ def check_checkout(root: Path) -> Path:
         ).strip()
     except subprocess.CalledProcessError as e:
         raise PipelineError(
-            f"Не найден Git checkout официального Cutie: {root}. Выполните uv run document-vos setup"
+            f"Не найден Git checkout официального Cutie: {root}. Проверьте paths.cutie "
+            "в config.yaml; для установки выполните uv run document-vos setup"
         ) from e
     if revision != CUTIE_REVISION or dirty:
         raise PipelineError(
@@ -176,6 +182,8 @@ class CutiePredictor:
         self, image: np.ndarray, mask: np.ndarray | None = None, end: bool = False
     ) -> np.ndarray:
         from time import perf_counter
+
+        import numpy as np
 
         torch = self.torch
         tensor = (

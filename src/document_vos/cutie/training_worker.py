@@ -4,24 +4,25 @@ import os
 import runpy
 from pathlib import Path
 
-from document_vos.cutie import (
-    activate_checkout,
-    check_checkout,
-    disable_downloads_and_require_full_weights,
-)
-from document_vos.cutie.training import validate_training_config
 from document_vos.io import PipelineError, read_json, sha256, write_json
 
 
 def main() -> None:
-    root = check_checkout(Path(os.environ["DOCUMENT_VOS_CUTIE"]))
     plan_path = Path(os.environ["DOCUMENT_VOS_TRAIN_PLAN"])
     plan = read_json(plan_path)
     cfg = plan["config"]
-    from document_vos.runtime import Runtime, configure
+    from document_vos.runtime import Runtime, configure, runtime_snapshot
 
     runtime = Runtime.parse(cfg.get("document_vos_runtime", {}))
     configure(runtime)
+    from document_vos.cutie import (
+        activate_checkout,
+        check_checkout,
+        disable_downloads_and_require_full_weights,
+    )
+    from document_vos.cutie.training import validate_training_config
+
+    root = check_checkout(Path(os.environ["DOCUMENT_VOS_CUTIE"]))
     if sha256(plan_path.parent / "config/train.yaml") != plan["config_sha256"]:
         raise PipelineError("Конфигурация обучения изменена после preflight")
     weights = Path(cfg["weights"])
@@ -54,6 +55,7 @@ def main() -> None:
             write_json(
                 plan_path.parent / "runtime.json",
                 {
+                    "cpu_runtime": runtime_snapshot(),
                     "status": status,
                     "error": error,
                     "peak_allocated_bytes": torch.cuda.max_memory_allocated(),

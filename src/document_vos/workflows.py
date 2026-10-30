@@ -13,16 +13,26 @@ def path(cfg: dict, name: str) -> Path:
 
 
 def weight(cfg: dict, model: str, explicit: Path | None = None) -> Path:
+    configured = cfg.get("benchmark", {}).get("models", {}).get(model, {}).get("weights")
+    if explicit is None and configured is not None:
+        explicit = Path(configured)
     if explicit:
         if not explicit.is_file():
-            raise PipelineError(f"Нет весов: {explicit}")
+            raise PipelineError(
+                f"Нет весов {model}: {explicit}. Проверьте benchmark.models.{model}.weights "
+                "в config.yaml или явный --weights для infer."
+            )
         return explicit.resolve()
     from document_vos.setup import models
 
     entry = models()["models"][model]
     target = path(cfg, "weights") / entry["filename"]
     if not target.is_file():
-        raise PipelineError(f"Нет {model}: выполните uv run document-vos setup")
+        raise PipelineError(
+            f"Нет весов {model}: {target}. Укажите существующий checkpoint через "
+            f"benchmark.models.{model}.weights в config.yaml или выполните "
+            f"uv run document-vos setup --model {model}."
+        )
     if sha256(target) != entry["sha256"]:
         raise PipelineError(
             f"{model}: веса отличаются от каталога; используйте явный --weights для своих весов"

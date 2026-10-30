@@ -250,9 +250,9 @@ save_checkpoint_interval: 10000
     assert cfg["main_training"]["num_ref_frames"] == 3
     assert cfg["main_training"]["amp"] is True
     assert cfg["weights"] == str(weights)
-    assert cfg["num_workers"] == 4
-    selected = training_config(root, weights, export, tmp_path / "result", {}, workers=6)
-    assert selected["num_workers"] == 6
+    assert cfg["num_workers"] == 6
+    selected = training_config(root, weights, export, tmp_path / "result", {}, workers=3)
+    assert selected["num_workers"] == 3
     for field, value in [("num_objects", 2), ("merge_probability", 0.5), ("enabled", False)]:
         bad = deepcopy(cfg)
         bad["main_training"][field] = value

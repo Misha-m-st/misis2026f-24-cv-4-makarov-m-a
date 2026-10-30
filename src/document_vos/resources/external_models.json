@@ -1,0 +1,26 @@
+{
+  "efficienttam": {
+    "repository": "https://github.com/yformer/EfficientTAM.git",
+    "revision": "abcd061ebd3cc6e7527d152d75b890126aaa53f6",
+    "checkpoint_repository": "yunyangx/efficient-track-anything",
+    "checkpoint_revision": "9bdd8ab585b19ef95f9c9ed847ac9478301890b4",
+    "checkpoint_sha256": "2b572be30d9e96ee29c8d785fe157c6b079ede7d56fbc8a3671d4120e63c89cd",
+    "checkpoint_bytes": 136375868,
+    "checkpoint_url": "https://huggingface.co/yunyangx/efficient-track-anything/resolve/9bdd8ab585b19ef95f9c9ed847ac9478301890b4/efficienttam_s.pt",
+    "checkpoint": "efficienttam_s.pt"
+  },
+  "livos": {
+    "repository": "https://github.com/uncbiag/LiVOS.git",
+    "revision": "8c26cb03f570942a0c9a26f5bf7a8d378fc9ac60",
+    "checkpoint_url": "https://drive.google.com/uc?id=1lhfnRCe1yPfB9dcWSA6hv7ABPzHFuNCY",
+    "checkpoint": "livos-wmose-480p.pth"
+  },
+  "sam31": {
+    "repository": "https://github.com/facebookresearch/sam3.git",
+    "revision": "f1647e8d0c1d280991f4d1b7d974c2704537fe66",
+    "hf_repository": "facebook/sam3.1",
+    "checkpoint": "sam3.1_multiplex.pt",
+    "sha256": "0567debeec80ba4ac6369540c6c248025283cb3ff2b92827509e57e2b3541cb6",
+    "bytes": 3502755717
+  }
+}

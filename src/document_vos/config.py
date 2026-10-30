@@ -19,11 +19,45 @@ DEFAULTS = {
         "prepared": "data/prepared",
         "weights": "weights",
         "results": "results",
-        "cutie": ".cache/Cutie",
+        "cutie": "external/Cutie",
+        "external_models": ".cache/external",
     },
     "datasets": {"selected": DATASETS, "roots": {}},
     "samples": {"dataset": "smartdoc2015", "count": 1, "catalog": None},
     "model": "finetuned",
+    "benchmark": {
+        "selected": ["baseline", "finetuned", "efficienttam", "livos", "sam31"],
+        "seed": 42,
+        "resolution": "cutie",
+        "manifest": None,
+        "split_dir": None,
+        "models": {
+            "baseline": {"weights": None, "inference": {}},
+            "finetuned": {"weights": None, "inference": {}},
+            "efficienttam": {
+                "weights": "weights/efficienttam/efficienttam_s.pt",
+                "amp": True,
+                "dtype": "bfloat16",
+                "compile": True,
+                "offload_video_to_cpu": True,
+                "offload_state_to_cpu": False,
+            },
+            "livos": {
+                "weights": "weights/livos/livos-wmose-480p.pth",
+                "max_internal_size": 480,
+                "amp": False,
+            },
+            "sam31": {
+                "weights": "weights/sam31/sam3.1_multiplex.pt",
+                "amp": True,
+                "dtype": "bfloat16",
+                "compile": False,
+                "use_fa3": False,
+                "offload_video_to_cpu": True,
+                "offload_state_to_cpu": False,
+            },
+        },
+    },
     "preparation": {"seed": 42, "val_fraction": 0.2, "seq_length": 8},
     "training": {
         "batch_size": 2,
@@ -70,6 +104,13 @@ DEFAULTS = {
 def merge(default: dict, supplied: dict, prefix: str = "") -> dict:
     if not isinstance(supplied, dict):
         raise PipelineError(f"{prefix or 'config'}: требуется словарь")
+    if prefix in {
+        "benchmark.models.baseline.inference",
+        "benchmark.models.finetuned.inference",
+    }:
+        # These are sparse overrides applied after the shared inference block.
+        merge(DEFAULTS["inference"], supplied)
+        return deepcopy(supplied)
     unknown = set(supplied) - set(default)
     if unknown:
         raise PipelineError(f"Неизвестные параметры {prefix}: {sorted(unknown)}")
@@ -100,8 +141,40 @@ def validate(cfg: dict) -> None:
     import math
 
     Runtime.parse(cfg["runtime"])
-    if cfg["model"] not in {"baseline", "finetuned"}:
-        raise PipelineError("model: baseline или finetuned")
+    if cfg["model"] not in {"baseline", "finetuned", "efficienttam", "livos", "sam31"}:
+        raise PipelineError("model: baseline, finetuned, efficienttam, livos или sam31")
+    bench = cfg["benchmark"]
+    known_models = set(bench["models"])
+    if (
+        not isinstance(bench["selected"], list)
+        or not bench["selected"]
+        or any(not isinstance(model, str) for model in bench["selected"])
+        or len(set(bench["selected"])) != len(bench["selected"])
+        or set(bench["selected"]) - known_models
+    ):
+        raise PipelineError("benchmark.selected: нужны уникальные поддерживаемые модели")
+    if type(bench["seed"]) is not int or bench["seed"] < 0:
+        raise PipelineError("benchmark.seed: требуется целое число >=0")
+    if bench["resolution"] not in {"cutie", "native"}:
+        raise PipelineError("benchmark.resolution: cutie или native")
+    for model, options in bench["models"].items():
+        if model in {"baseline", "finetuned"}:
+            if options["weights"] is not None and (
+                not isinstance(options["weights"], str) or not options["weights"].strip()
+            ):
+                raise PipelineError(f"benchmark.models.{model}.weights: путь или null")
+        elif options["weights"] is not None and (
+            not isinstance(options["weights"], str) or not options["weights"].strip()
+        ):
+            raise PipelineError(f"benchmark.models.{model}.weights: требуется путь")
+        if model in {"efficienttam", "sam31"} and options.get("dtype") not in {
+            "float16",
+            "bfloat16",
+        }:
+            raise PipelineError(f"benchmark.models.{model}.dtype: float16 или bfloat16")
+    for key in ("manifest", "split_dir"):
+        if bench[key] is not None and (not isinstance(bench[key], str) or not bench[key].strip()):
+            raise PipelineError(f"benchmark.{key}: путь или null")
     selected = cfg["datasets"]["selected"]
     if (
         not selected
@@ -179,6 +252,14 @@ def load(path: Path | None = None) -> dict:
         for key, val in cfg["datasets"]["roots"].items()
     }
     cfg["sam"]["weights"] = str((base / Path(cfg["sam"]["weights"]).expanduser()).resolve())
+    for key in ("manifest", "split_dir"):
+        value = cfg["benchmark"][key]
+        if value is not None:
+            cfg["benchmark"][key] = str((base / Path(value).expanduser()).resolve())
+    for options in cfg["benchmark"]["models"].values():
+        value = options.get("weights")
+        if value is not None:
+            options["weights"] = str((base / Path(value).expanduser()).resolve())
     if cfg["samples"]["catalog"] is not None:
         val = cfg["samples"]["catalog"]
         if not isinstance(val, str):

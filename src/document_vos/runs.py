@@ -86,11 +86,29 @@ class Run:
     ):
         self.root = root
         self.signature = {"config": cfg, "inputs": inputs, "source_sha256": source_signature()}
+        if task in {"benchmark", "infer", "reproduce", "train", "cuda-smoke"}:
+            from document_vos.runtime import runtime_snapshot
+            from document_vos.timing import TIMING_PROTOCOL
+
+            actual = runtime_snapshot()
+            # Optional model dependencies may load additional BLAS libraries.
+            # Their measured pools must all be 1; library presence is not a CPU-profile change.
+            actual["pools"]["blas"] = sorted(
+                {pool["num_threads"] for pool in actual["pools"]["blas"]}
+            )
+            self.signature["execution"] = {
+                "timing_protocol": TIMING_PROTOCOL,
+                "cpu_runtime": actual,
+            }
         if resume:
             if output:
                 raise PipelineError("--resume и --output несовместимы")
             self.output = resume.resolve()
             self.state = read_json(self.output / "status.json")
+            if self.state["signature"].get("execution") != self.signature.get("execution"):
+                raise PipelineError(
+                    "CPU-профиль или протокол таймера изменился; нужен новый запуск"
+                )
             if self.state["signature"] != self.signature:
                 raise PipelineError(
                     "Входы, конфигурация или исходники изменились; нужен новый запуск"

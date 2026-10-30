@@ -4,17 +4,9 @@ import argparse
 import json
 from pathlib import Path
 
-import numpy as np
-from PIL import Image
-
 from document_vos.config import load
-from document_vos.cutie import check_checkout
-from document_vos.data import Frame, Sequence, save_manifest
-from document_vos.data.export import export_training
-from document_vos.data.split import split_manifest
 from document_vos.runs import Run
 from document_vos.runtime import Runtime, configure
-from document_vos.workflows import paired, weight
 
 
 def main(argv=None):
@@ -28,9 +20,16 @@ def main(argv=None):
     if args.cutie_root:
         cfg["paths"]["cutie"] = str(args.cutie_root.resolve())
     cfg["training"]["num_iterations"] = 2
-    cfg["runtime"]["dataloader_workers"] = 0
-    cfg["runtime"]["workers"] = 1
     configure(Runtime.parse(cfg["runtime"]))
+    import numpy as np
+    from PIL import Image
+
+    from document_vos.cutie import check_checkout
+    from document_vos.data import Frame, Sequence, save_manifest
+    from document_vos.data.export import export_training
+    from document_vos.data.split import split_manifest
+    from document_vos.workflows import paired, weight
+
     root = check_checkout(Path(cfg["paths"]["cutie"]))
     initial = weight(cfg, "baseline", args.weights)
     run = Run(

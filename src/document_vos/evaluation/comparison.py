@@ -15,6 +15,7 @@ from document_vos.io import (
     sha256,
     write_json,
 )
+from document_vos.timing import speed_compatibility
 
 
 def checked_evaluation(path: Path) -> dict:
@@ -115,6 +116,7 @@ def compare(baseline: Path, finetuned: Path, output: Path) -> dict:
         delta_videos.append(row)
     result = {
         "status": "COMPLETE",
+        "speed_compatibility": speed_compatibility({"baseline": a["run"], "finetuned": b["run"]}),
         "kind": "comparison",
         "scope": a["scope"],
         "selection": a["selection"],

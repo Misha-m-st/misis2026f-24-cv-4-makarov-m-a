@@ -13,6 +13,7 @@ from pathlib import Path
 
 from omegaconf import OmegaConf
 
+from document_vos.config import DEFAULTS
 from document_vos.cutie import (
     CUTIE_REVISION,
     activate_checkout,
@@ -148,7 +149,7 @@ def worker(case: Path, warmup: int, steps: int) -> None:
 
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
-    p.add_argument("--cutie", type=Path, default=Path(".cache/Cutie"))
+    p.add_argument("--cutie", type=Path, default=Path(DEFAULTS["paths"]["cutie"]))
     p.add_argument("--weights", type=Path, default=Path("weights/cutie-base-mega.pth"))
     p.add_argument("--export", type=Path, default=Path("data/prepared/training-export"))
     p.add_argument("--output", type=Path)

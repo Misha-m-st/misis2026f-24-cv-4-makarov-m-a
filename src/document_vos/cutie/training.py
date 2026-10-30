@@ -152,6 +152,9 @@ def train(
     refresh_export: bool = False,
 ) -> dict:
     runtime = replace(runtime or current_runtime(), dataloader_workers=workers)
+    from document_vos.runtime import configure
+
+    configure(runtime)
     if type(workers) is not int or workers < 0:
         raise PipelineError("DataLoader workers должен быть >= 0")
     root, weights, export = check_checkout(root), local_weights(weights), export.resolve()

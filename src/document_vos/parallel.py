@@ -1,7 +1,6 @@
 """Небольшой пул CPU-процессов с ограниченной очередью и стабильным порядком."""
 
 import multiprocessing
-import os
 import sys
 from collections import deque
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
@@ -10,7 +9,7 @@ from typing import Callable, Iterable, Iterator, TypeVar
 
 from document_vos.io import PipelineError
 
-DEFAULT_WORKERS = 4
+DEFAULT_WORKERS = 6
 T = TypeVar("T")
 R = TypeVar("R")
 
@@ -21,20 +20,10 @@ def check_workers(workers: int) -> None:
 
 
 def _initialize_worker(threads: int = 1) -> None:
-    # Каждый рабочий процесс выполняет одну CPU-задачу, без вложенных BLAS-пулов.
-    for name in [
-        "OMP_NUM_THREADS",
-        "OPENBLAS_NUM_THREADS",
-        "MKL_NUM_THREADS",
-        "NUMEXPR_NUM_THREADS",
-    ]:
-        os.environ[name] = str(threads)
-    # spawn imports the entrypoint before this initializer. Also limit libraries
-    # that have already been imported by that entrypoint.
-    if "cv2" in sys.modules:
-        sys.modules["cv2"].setNumThreads(threads)
-    if "torch" in sys.modules:
-        sys.modules["torch"].set_num_threads(threads)
+    from document_vos.runtime import configure_environment, configure_libraries
+
+    configure_environment()
+    configure_libraries(worker=True)
 
 
 def ordered_map(
@@ -69,13 +58,9 @@ def ordered_map(
         pool = ThreadPoolExecutor(max_workers=workers)
     else:
         # Environment is inherited before spawn imports numpy/torch.
-        for name in [
-            "OMP_NUM_THREADS",
-            "OPENBLAS_NUM_THREADS",
-            "MKL_NUM_THREADS",
-            "NUMEXPR_NUM_THREADS",
-        ]:
-            os.environ[name] = str(runtime.threads_per_worker)
+        from document_vos.runtime import configure_environment
+
+        configure_environment()
         pool = ProcessPoolExecutor(
             max_workers=workers,
             mp_context=multiprocessing.get_context("spawn"),
